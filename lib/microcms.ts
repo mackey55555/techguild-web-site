@@ -36,6 +36,10 @@ export type SiteStats = {
   sessionCount: string
   continuationLabel: string
   tagline: string
+  organizerName: string
+  organizerRole: string
+  organizerBio: string
+  organizerPhoto?: { url: string; width: number; height: number }
 }
 
 export type RoadmapMilestone = {
@@ -97,7 +101,19 @@ export async function getSiteStats(): Promise<SiteStats> {
       sessionCount: '12回',
       continuationLabel: '1年',
       tagline: '小さく、でも止まらずに。',
+      organizerName: 'Naoyuki（gilda）',
+      organizerRole: '運営 / gilda',
+      organizerBio: '<p>正直に言うと、最初は「うまくいくかどうか」なんてわかりませんでした。ただ、地域の学生が本物のIT開発を経験できる場所がなかった。それが悔しくて、とにかく始めてみた。</p><p>今は17名の学生と何社かの企業が関わってくれています。毎月の座談会でみんなの話を聞いていると、「あ、続けてよかった」と思う瞬間が確かにある。</p><p>まだまだ小さいコミュニティです。でも、小さいからこそ、一人ひとりと深く関われる。それがTech Guildの一番の強みだと思っています。</p>',
     }
+  }
+}
+
+export function extractOrganizer(stats: SiteStats): Organizer {
+  return {
+    name: stats.organizerName,
+    role: stats.organizerRole,
+    bio: stats.organizerBio,
+    photo: stats.organizerPhoto,
   }
 }
 
@@ -109,17 +125,5 @@ export async function getRoadmap() {
     })
   } catch {
     return { contents: [] as RoadmapMilestone[], totalCount: 0, offset: 0, limit: 20 }
-  }
-}
-
-export async function getOrganizer(): Promise<Organizer> {
-  try {
-    return await client.getObject<Organizer>({ endpoint: 'organizer' })
-  } catch {
-    return {
-      name: 'Naoyuki（gilda）',
-      role: '運営 / gilda',
-      bio: '<p>正直に言うと、最初は「うまくいくかどうか」なんてわかりませんでした。ただ、地域の学生が本物のIT開発を経験できる場所がなかった。それが悔しくて、とにかく始めてみた。</p><p>今は17名の学生と何社かの企業が関わってくれています。毎月の座談会でみんなの話を聞いていると、「あ、続けてよかった」と思う瞬間が確かにある。</p><p>まだまだ小さいコミュニティです。でも、小さいからこそ、一人ひとりと深く関われる。それがTech Guildの一番の強みだと思っています。</p>',
-    }
   }
 }
