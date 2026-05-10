@@ -88,7 +88,7 @@ export function Footer() {
           style={{ borderColor: 'rgba(250,246,238,0.15)' }}
         >
           <p className="text-xs opacity-40" style={{ color: 'var(--cream)' }}>
-            © 2024 Tech Guild. All rights reserved.
+            © {new Date().getFullYear()} Tech Guild. All rights reserved.
           </p>
           <p className="text-xs opacity-40" style={{ color: 'var(--cream)' }}>
             Organizer: gilda (Naoyuki)
