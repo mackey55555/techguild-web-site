@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Instagram, ExternalLink } from 'lucide-react'
+import { ExternalLink } from 'lucide-react'
 
 function XIcon({ size = 20 }: { size?: number }) {
   return (
@@ -71,20 +71,14 @@ export function Footer() {
             </p>
             <div className="flex gap-4">
               <a
-                href="#"
+                href="https://x.com/Tech_Guild_SNS"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="X"
                 className="opacity-70 hover:opacity-100 transition-opacity"
                 style={{ color: 'var(--cream)' }}
               >
                 <XIcon size={20} />
-              </a>
-              <a
-                href="#"
-                aria-label="Instagram"
-                className="opacity-70 hover:opacity-100 transition-opacity"
-                style={{ color: 'var(--cream)' }}
-              >
-                <Instagram size={20} />
               </a>
               <a
                 href="#"
