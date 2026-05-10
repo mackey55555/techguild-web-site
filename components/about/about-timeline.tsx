@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import type { RoadmapMilestone } from '@/lib/microcms'
 
 const FALLBACK_MILESTONES: RoadmapMilestone[] = [
-  { id: '1', year: '2026', events: '初ハッカソン開催（17名）\n座談会 12回連続', status: 'done', sortOrder: 1 },
+  { id: '1', year: '2026', events: '[初ハッカソン開催（参加者:17名）](https://okayama-engineer.connpass.com/event/381194/)\n座談会 12回連続', status: 'done', sortOrder: 1 },
   { id: '2', year: '2027', events: '活動拡大中…', status: 'upcoming', sortOrder: 2 },
   { id: '3', year: '2028', events: '地域ITコミュニティの標準モデルへ', status: 'future', sortOrder: 3 },
 ]
@@ -90,17 +90,47 @@ export function AboutTimeline({ milestones }: { milestones: RoadmapMilestone[] }
                 </span>
               </div>
 
-              {m.events.split('\n').map((event) => (
-                <p
-                  key={event}
-                  className="text-sm leading-relaxed pl-7"
-                  style={{
-                    color: m.status === 'done' ? 'var(--cream)' : 'rgba(250,246,238,0.4)',
-                  }}
-                >
-                  {event}
-                </p>
-              ))}
+              {m.events.split('\n').map((event) => {
+                const match = event.match(/^\[(.+)\]\((.+)\)$/)
+                return (
+                  <p
+                    key={event}
+                    className="text-sm leading-relaxed pl-7"
+                    style={{
+                      color: m.status === 'done' ? 'var(--cream)' : 'rgba(250,246,238,0.4)',
+                    }}
+                  >
+                    {match ? (
+                      <a
+                        href={match[2]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 font-semibold underline underline-offset-4 decoration-2 hover:opacity-80 transition-opacity"
+                        style={{ color: 'var(--gold)' }}
+                      >
+                        {match[1]}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path d="M7 17L17 7" />
+                          <path d="M8 7h9v9" />
+                        </svg>
+                      </a>
+                    ) : (
+                      event
+                    )}
+                  </p>
+                )
+              })}
             </div>
           ))}
         </div>
