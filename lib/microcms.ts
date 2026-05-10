@@ -1,13 +1,15 @@
 import { createClient } from 'microcms-js-sdk'
 
 let _client: ReturnType<typeof createClient> | null = null
+let _warned = false
 
 function getClient(): ReturnType<typeof createClient> | null {
   if (_client) return _client
   const serviceDomain = process.env.MICROCMS_SERVICE_DOMAIN
   const apiKey = process.env.MICROCMS_API_KEY
   if (!serviceDomain || !apiKey) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production' && !_warned) {
+      _warned = true
       console.warn(
         '[microcms] MICROCMS_SERVICE_DOMAIN / MICROCMS_API_KEY が未設定のため、コンテンツなしで起動します。',
       )
