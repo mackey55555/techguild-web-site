@@ -90,9 +90,6 @@ export function Footer() {
           <p className="text-xs opacity-40" style={{ color: 'var(--cream)' }}>
             © {new Date().getFullYear()} Tech Guild. All rights reserved.
           </p>
-          <p className="text-xs opacity-40" style={{ color: 'var(--cream)' }}>
-            Organizer: gilda (Naoyuki)
-          </p>
         </div>
       </div>
     </footer>
