@@ -4,9 +4,9 @@ import { useEffect, useRef } from 'react'
 import type { RoadmapMilestone } from '@/lib/microcms'
 
 const FALLBACK_MILESTONES: RoadmapMilestone[] = [
-  { id: '1', year: '2024', events: '初ハッカソン開催（17名）\n座談会 12回連続', status: 'done', sortOrder: 1 },
-  { id: '2', year: '2025', events: '活動拡大中…', status: 'upcoming', sortOrder: 2 },
-  { id: '3', year: '2027', events: '地域ITコミュニティの標準モデルへ', status: 'future', sortOrder: 3 },
+  { id: '1', year: '2026', events: '初ハッカソン開催（17名）\n座談会 12回連続', status: 'done', sortOrder: 1 },
+  { id: '2', year: '2027', events: '活動拡大中…', status: 'upcoming', sortOrder: 2 },
+  { id: '3', year: '2028', events: '地域ITコミュニティの標準モデルへ', status: 'future', sortOrder: 3 },
 ]
 
 export function AboutTimeline({ milestones }: { milestones: RoadmapMilestone[] }) {
