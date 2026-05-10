@@ -116,10 +116,10 @@ const fallbackSiteStats: SiteStats = {
   sessionCount: '12回',
   continuationLabel: '1年',
   tagline: '小さく、でも止まらずに。',
-  organizerName: 'Naoyuki（gilda）',
-  organizerRole: '運営 / gilda',
+  organizerName: 'まきはら　あきら',
+  organizerRole: 'TechGuild ギルドマスター',
   organizerBio:
-    '<p>正直に言うと、最初は「うまくいくかどうか」なんてわかりませんでした。ただ、地域の学生が本物のIT開発を経験できる場所がなかった。それが悔しくて、とにかく始めてみた。</p><p>今は17名の学生と何社かの企業が関わってくれています。毎月の座談会でみんなの話を聞いていると、「あ、続けてよかった」と思う瞬間が確かにある。</p><p>まだまだ小さいコミュニティです。でも、小さいからこそ、一人ひとりと深く関われる。それがTech Guildの一番の強みだと思っています。</p>',
+    '<p>岡山を拠点に活動するエンジニア兼プロダクトマネージャー。エンジニア歴は約10年。Web（PHP / Laravel、Next.js / React）、クラウド（AWS）、モバイル（React Native、Swift、Kotlin）を中心に、設計から実装、プロダクトの立ち上げまで一通り手がけてきました。</p><p>平日はシステム会社でPM兼エンジニアとして働きながら、TechGuildの運営をしています。</p><p>岡山に拠点を移してから、「もっと気軽にエンジニア同士で集まって、技術の話も、仕事の話も、雑談も、ゆるくできる場がほしい」と感じたことがTech Guild立ち上げのきっかけ。座談会、勉強会、ハッカソンを通じて、初学者からベテランまで誰でも心地よく参加できるコミュニティを目指しています。</p><p>岡山で一緒にレベル上げしていきましょう。お気軽にイベントへ遊びに来てください！</p>',
 }
 
 export async function getSiteStats(): Promise<SiteStats> {
