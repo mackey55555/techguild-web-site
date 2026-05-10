@@ -58,7 +58,7 @@ export type SiteStats = {
 export type RoadmapMilestone = {
   id: string
   year: string
-  events: string // 改行区切りのテキスト
+  events: string[] // 各 event は Markdown 風の `[text](url)` 構文でリンク化可能
   status: 'done' | 'upcoming' | 'future'
   sortOrder: number
 }

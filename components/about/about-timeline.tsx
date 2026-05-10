@@ -2,12 +2,9 @@
 
 import { useEffect, useRef } from 'react'
 import type { RoadmapMilestone } from '@/lib/microcms'
+import fallbackMilestones from '@/data/roadmap-milestones.json'
 
-const FALLBACK_MILESTONES: RoadmapMilestone[] = [
-  { id: '1', year: '2026', events: '[初ハッカソン開催（参加者:17名）](https://okayama-engineer.connpass.com/event/381194/)\n座談会 12回連続', status: 'done', sortOrder: 1 },
-  { id: '2', year: '2027', events: '活動拡大中…', status: 'upcoming', sortOrder: 2 },
-  { id: '3', year: '2028', events: '地域ITコミュニティの標準モデルへ', status: 'future', sortOrder: 3 },
-]
+const FALLBACK_MILESTONES = fallbackMilestones as RoadmapMilestone[]
 
 export function AboutTimeline({ milestones }: { milestones: RoadmapMilestone[] }) {
   const data = milestones.length > 0 ? milestones : FALLBACK_MILESTONES
@@ -90,7 +87,7 @@ export function AboutTimeline({ milestones }: { milestones: RoadmapMilestone[] }
                 </span>
               </div>
 
-              {m.events.split('\n').map((event) => {
+              {m.events.map((event) => {
                 const match = event.match(/^\[(.+)\]\((.+)\)$/)
                 return (
                   <p
