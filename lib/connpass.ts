@@ -37,15 +37,31 @@ function parseEntries(xml: string): ConnpassEvent[] {
     const title = decodeEntities(
       extract(block, /<title\b[^>]*>([\s\S]*?)<\/title>/)
     )
-    const url = extract(block, /<link\b[^>]*href="([^"]+)"/)
+    const rawUrl = extract(block, /<link\b[^>]*href="([^"]+)"/)
     const summary = decodeEntities(
       extract(block, /<summary\b[^>]*>([\s\S]*?)<\/summary>/)
     )
-    if (!title || !url) continue
+    if (!title || !rawUrl) continue
+    const url = sanitizeConnpassUrl(rawUrl)
+    if (!url) continue
     const { startedAt, endedAt } = parseEventDates(summary)
     results.push({ title, url, startedAt, endedAt })
   }
   return results
+}
+
+function sanitizeConnpassUrl(url: string): string | null {
+  try {
+    const parsed = new URL(url)
+    const isHttps = parsed.protocol === 'https:'
+    const isConnpassHost =
+      parsed.hostname === 'connpass.com' ||
+      parsed.hostname.endsWith('.connpass.com')
+    if (!isHttps || !isConnpassHost) return null
+    return parsed.toString()
+  } catch {
+    return null
+  }
 }
 
 function extract(s: string, re: RegExp): string {
