@@ -142,10 +142,12 @@ function parseMarkdownLink(value: string): { text: string; url: string } | null 
 
   const text = match[1]
   const rawUrl = match[2]
+  if (rawUrl.startsWith('//')) return null
   const parsed = parseUrl(rawUrl)
   if (!parsed) return null
 
   if (!['http:', 'https:'].includes(parsed.protocol)) return null
+  if (parsed.username || parsed.password) return null
 
   return { text, url: parsed.href }
 }
