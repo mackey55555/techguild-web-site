@@ -142,15 +142,18 @@ function parseMarkdownLink(value: string): { text: string; url: string } | null 
 
   const text = match[1]
   const rawUrl = match[2]
-
-  let parsed: URL
-  try {
-    parsed = new URL(rawUrl)
-  } catch {
-    return null
-  }
+  const parsed = parseUrl(rawUrl)
+  if (!parsed) return null
 
   if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return null
 
   return { text, url: parsed.toString() }
+}
+
+function parseUrl(value: string): URL | null {
+  try {
+    return new URL(value)
+  } catch {
+    return null
+  }
 }
