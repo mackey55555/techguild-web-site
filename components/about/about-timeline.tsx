@@ -87,11 +87,11 @@ export function AboutTimeline({ milestones }: { milestones: RoadmapMilestone[] }
                 </span>
               </div>
 
-              {m.events.map((event) => {
+              {m.events.map((event, eventIndex) => {
                 const match = event.match(/^\[(.+)\]\((.+)\)$/)
                 return (
                   <p
-                    key={event}
+                    key={`${m.year}-${eventIndex}`}
                     className="text-sm leading-relaxed pl-7"
                     style={{
                       color: m.status === 'done' ? 'var(--cream)' : 'rgba(250,246,238,0.4)',
