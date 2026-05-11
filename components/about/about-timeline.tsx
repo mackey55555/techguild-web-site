@@ -145,7 +145,7 @@ function parseMarkdownLink(value: string): { text: string; url: string } | null 
   const parsed = parseUrl(rawUrl)
   if (!parsed) return null
 
-  if (!(parsed.protocol === 'http:' || parsed.protocol === 'https:')) return null
+  if (!['http:', 'https:'].includes(parsed.protocol)) return null
 
   return { text, url: parsed.href }
 }
