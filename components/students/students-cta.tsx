@@ -2,6 +2,7 @@ import {
   CONNPASS_GROUP_URL,
   type ConnpassEvent,
 } from '@/lib/connpass'
+import { formatEventDate } from '@/lib/date'
 
 export function StudentsCta({
   connpassEvents,
@@ -119,7 +120,7 @@ function UpcomingEvents({ events }: { events: ConnpassEvent[] }) {
                       <rect x="3" y="4" width="18" height="18" rx="2" />
                       <path d="M16 2v4M8 2v4M3 10h18" />
                     </svg>
-                    {formatDate(e.startedAt, e.endedAt)}
+                    {formatEventDate(e.startedAt, e.endedAt)}
                   </p>
                 )}
                 <p className="font-serif font-bold text-lg md:text-xl leading-snug">
@@ -171,27 +172,4 @@ function Fallback() {
       </p>
     </>
   )
-}
-
-const FORMATTER = new Intl.DateTimeFormat('ja-JP', {
-  timeZone: 'Asia/Tokyo',
-  year: 'numeric',
-  month: '2-digit',
-  day: '2-digit',
-  weekday: 'short',
-  hour: '2-digit',
-  minute: '2-digit',
-})
-
-const TIME_FORMATTER = new Intl.DateTimeFormat('ja-JP', {
-  timeZone: 'Asia/Tokyo',
-  hour: '2-digit',
-  minute: '2-digit',
-})
-
-function formatDate(startIso: string, endIso: string | null): string {
-  const start = FORMATTER.format(new Date(startIso))
-  if (!endIso) return start
-  const end = TIME_FORMATTER.format(new Date(endIso))
-  return `${start} – ${end}`
 }
