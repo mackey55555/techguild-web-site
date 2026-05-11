@@ -88,7 +88,7 @@ export function AboutTimeline({ milestones }: { milestones: RoadmapMilestone[] }
               </div>
 
               {m.events.map((event, eventIndex) => {
-                const match = event.match(/^\[(.+)\]\((.+)\)$/)
+                const parsed = parseMarkdownLink(event)
                 return (
                   <p
                     key={`${m.year}-${eventIndex}`}
@@ -97,15 +97,15 @@ export function AboutTimeline({ milestones }: { milestones: RoadmapMilestone[] }
                       color: m.status === 'done' ? 'var(--cream)' : 'rgba(250,246,238,0.4)',
                     }}
                   >
-                    {match ? (
+                    {parsed ? (
                       <a
-                        href={match[2]}
+                        href={parsed.url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 font-semibold underline underline-offset-4 decoration-2 hover:opacity-80 transition-opacity"
                         style={{ color: 'var(--gold)' }}
                       >
-                        {match[1]}
+                        {parsed.text}
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="14"
@@ -134,4 +134,23 @@ export function AboutTimeline({ milestones }: { milestones: RoadmapMilestone[] }
       </div>
     </section>
   )
+}
+
+function parseMarkdownLink(value: string): { text: string; url: string } | null {
+  const match = value.match(/^\[(.+)\]\((.+)\)$/)
+  if (!match) return null
+
+  const text = match[1]
+  const rawUrl = match[2]
+
+  let parsed: URL
+  try {
+    parsed = new URL(rawUrl)
+  } catch {
+    return null
+  }
+
+  if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return null
+
+  return { text, url: parsed.toString() }
 }
