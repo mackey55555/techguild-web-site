@@ -1,12 +1,27 @@
 import Link from 'next/link'
-import { Twitter, Instagram, ExternalLink } from 'lucide-react'
+import { ExternalLink } from 'lucide-react'
+
+function XIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  )
+}
 
 const navLinks = [
-  { href: '/', label: 'Top' },
-  { href: '/about', label: 'About' },
-  { href: '/activities', label: 'Activities' },
-  { href: '/companies', label: 'For Companies' },
-  { href: '/students', label: 'For Students' },
+  { href: '/', label: 'ホーム' },
+  { href: '/about', label: '私たちについて' },
+  { href: '/activities', label: '活動内容' },
+  { href: '/students', label: '学生の方へ' },
+  { href: '/companies', label: '企業の方へ' },
 ]
 
 export function Footer() {
@@ -56,20 +71,14 @@ export function Footer() {
             </p>
             <div className="flex gap-4">
               <a
-                href="#"
-                aria-label="Twitter"
+                href="https://x.com/Tech_Guild_SNS"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X"
                 className="opacity-70 hover:opacity-100 transition-opacity"
                 style={{ color: 'var(--cream)' }}
               >
-                <Twitter size={20} />
-              </a>
-              <a
-                href="#"
-                aria-label="Instagram"
-                className="opacity-70 hover:opacity-100 transition-opacity"
-                style={{ color: 'var(--cream)' }}
-              >
-                <Instagram size={20} />
+                <XIcon size={20} />
               </a>
               <a
                 href="#"
@@ -88,10 +97,7 @@ export function Footer() {
           style={{ borderColor: 'rgba(250,246,238,0.15)' }}
         >
           <p className="text-xs opacity-40" style={{ color: 'var(--cream)' }}>
-            © 2024 Tech Guild. All rights reserved.
-          </p>
-          <p className="text-xs opacity-40" style={{ color: 'var(--cream)' }}>
-            Organizer: gilda (Naoyuki)
+            © {new Date().getFullYear()} Tech Guild. All rights reserved.
           </p>
         </div>
       </div>

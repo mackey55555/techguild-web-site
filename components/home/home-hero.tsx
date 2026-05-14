@@ -3,7 +3,7 @@ import Link from 'next/link'
 export function HomeHero() {
   return (
     <section
-      className="relative min-h-screen flex flex-col justify-center overflow-hidden clip-diagonal-bottom pt-16"
+      className="relative min-h-[78vh] flex flex-col justify-center overflow-hidden clip-diagonal-bottom pt-16"
       style={{ backgroundColor: 'var(--cream)' }}
     >
       {/* Decorative background text */}
@@ -56,16 +56,16 @@ export function HomeHero() {
             {/* CTA Stamps */}
             <div className="flex flex-col sm:flex-row lg:flex-col gap-4">
               <Link
-                href="/companies"
-                className="inline-block px-6 py-3 font-bold text-sm text-center cta-stamp-forest"
-              >
-                {'企業として関わる'}
-              </Link>
-              <Link
                 href="/students"
                 className="inline-block px-6 py-3 font-bold text-sm text-center cta-stamp-gold"
               >
                 {'学生として参加する'}
+              </Link>
+              <Link
+                href="/companies"
+                className="inline-block px-6 py-3 font-bold text-sm text-center cta-stamp-forest"
+              >
+                {'企業として関わる'}
               </Link>
             </div>
           </div>

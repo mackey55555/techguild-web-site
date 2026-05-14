@@ -6,11 +6,11 @@ import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 
 const navLinks = [
-  { href: '/', label: 'Top' },
-  { href: '/about', label: 'About' },
-  { href: '/activities', label: 'Activities' },
-  { href: '/companies', label: 'For Companies' },
-  { href: '/students', label: 'For Students' },
+  { href: '/', label: 'ホーム' },
+  { href: '/about', label: '私たちについて' },
+  { href: '/activities', label: '活動内容' },
+  { href: '/students', label: '学生の方へ' },
+  { href: '/companies', label: '企業の方へ' },
 ]
 
 export function Nav() {

@@ -349,24 +349,24 @@ a[href="/students"]:hover {
   background-color: var(--forest);
   color: var(--cream);
   border: 2px solid var(--forest);
-  transform: rotate(-1deg);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .cta-stamp-forest:hover {
-  transform: rotate(-1deg) translateY(-2px);
-  box-shadow: 3px 3px 0 var(--terra);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18);
 }
 
 .cta-stamp-gold {
   background-color: var(--gold);
   color: var(--forest);
   border: 2px solid var(--forest);
-  transform: rotate(1deg);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .cta-stamp-gold:hover {
-  transform: rotate(1deg) translateY(-2px);
-  box-shadow: 3px 3px 0 var(--forest);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18);
 }
 
 .cta-outline-cream {

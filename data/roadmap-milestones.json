@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "year": "2026",
+    "events": [
+      "[初ハッカソン開催（参加者:17名）](https://okayama-engineer.connpass.com/event/381194/)",
+      "座談会 12回連続"
+    ],
+    "status": "done",
+    "sortOrder": 1
+  },
+  {
+    "id": "2",
+    "year": "2027",
+    "events": ["活動拡大中…"],
+    "status": "upcoming",
+    "sortOrder": 2
+  },
+  {
+    "id": "3",
+    "year": "2028",
+    "events": ["地域ITコミュニティの標準モデルへ"],
+    "status": "future",
+    "sortOrder": 3
+  }
+]

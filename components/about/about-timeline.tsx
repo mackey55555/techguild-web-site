@@ -2,12 +2,9 @@
 
 import { useEffect, useRef } from 'react'
 import type { RoadmapMilestone } from '@/lib/microcms'
+import fallbackMilestones from '@/data/roadmap-milestones.json'
 
-const FALLBACK_MILESTONES: RoadmapMilestone[] = [
-  { id: '1', year: '2024', events: '初ハッカソン開催（17名）\n座談会 12回連続', status: 'done', sortOrder: 1 },
-  { id: '2', year: '2025', events: '活動拡大中…', status: 'upcoming', sortOrder: 2 },
-  { id: '3', year: '2027', events: '地域ITコミュニティの標準モデルへ', status: 'future', sortOrder: 3 },
-]
+const FALLBACK_MILESTONES = fallbackMilestones as RoadmapMilestone[]
 
 export function AboutTimeline({ milestones }: { milestones: RoadmapMilestone[] }) {
   const data = milestones.length > 0 ? milestones : FALLBACK_MILESTONES
@@ -90,21 +87,74 @@ export function AboutTimeline({ milestones }: { milestones: RoadmapMilestone[] }
                 </span>
               </div>
 
-              {m.events.split('\n').map((event) => (
-                <p
-                  key={event}
-                  className="text-sm leading-relaxed pl-7"
-                  style={{
-                    color: m.status === 'done' ? 'var(--cream)' : 'rgba(250,246,238,0.4)',
-                  }}
-                >
-                  {event}
-                </p>
-              ))}
+              {m.events.map((event, eventIndex) => {
+                const parsed = parseMarkdownLink(event)
+                return (
+                  <p
+                    key={`${m.year}-${eventIndex}`}
+                    className="text-sm leading-relaxed pl-7"
+                    style={{
+                      color: m.status === 'done' ? 'var(--cream)' : 'rgba(250,246,238,0.4)',
+                    }}
+                  >
+                    {parsed ? (
+                      <a
+                        href={parsed.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 font-semibold underline underline-offset-4 decoration-2 hover:opacity-80 transition-opacity"
+                        style={{ color: 'var(--gold)' }}
+                      >
+                        {parsed.text}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path d="M7 17L17 7" />
+                          <path d="M8 7h9v9" />
+                        </svg>
+                      </a>
+                    ) : (
+                      event
+                    )}
+                  </p>
+                )
+              })}
             </div>
           ))}
         </div>
       </div>
     </section>
   )
+}
+
+function parseMarkdownLink(value: string): { text: string; url: string } | null {
+  const match = value.match(/^\[(.+)\]\((.+)\)$/)
+  if (!match) return null
+
+  const text = match[1]
+  const rawUrl = match[2]
+  const parsed = parseUrl(rawUrl)
+  if (!parsed) return null
+
+  if (!['http:', 'https:'].includes(parsed.protocol)) return null
+  if (parsed.username || parsed.password) return null
+
+  return { text, url: parsed.href }
+}
+
+function parseUrl(value: string): URL | null {
+  try {
+    return new URL(value)
+  } catch {
+    return null
+  }
 }

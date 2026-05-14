@@ -5,13 +5,15 @@ import { ActivitiesRoundtable } from '@/components/activities/activities-roundta
 import { ActivitiesRecord } from '@/components/activities/activities-record'
 import { ActivitiesNextEvent } from '@/components/activities/activities-next-event'
 import { getRoundtableSessions, getActiveNextEvent } from '@/lib/microcms'
+import { getConnpassUpcomingEvents } from '@/lib/connpass'
 
 export const revalidate = 300
 
 export default async function ActivitiesPage() {
-  const [sessionsRes, nextEventRes] = await Promise.all([
+  const [sessionsRes, nextEventRes, connpassEvents] = await Promise.all([
     getRoundtableSessions(),
     getActiveNextEvent(),
+    getConnpassUpcomingEvents(),
   ])
 
   return (
@@ -20,7 +22,10 @@ export default async function ActivitiesPage() {
       <ActivitiesHackathon />
       <ActivitiesRoundtable />
       <ActivitiesRecord sessions={sessionsRes.contents} />
-      <ActivitiesNextEvent event={nextEventRes.contents[0] ?? null} />
+      <ActivitiesNextEvent
+        event={nextEventRes.contents[0] ?? null}
+        connpassEvents={connpassEvents}
+      />
     </ScrollRevealProvider>
   )
 }
