@@ -1,12 +1,14 @@
 import { config, fields, collection, singleton } from '@keystatic/core'
 
-// GitHub App の認証情報が揃っている本番でのみ GitHub モード、
-// それ以外（ローカル開発・env 未設定のプレビュー）は local モードにする。
-// こうすることで KEYSTATIC_* 未設定でもビルドが壊れず、
+// GitHub モードにするのは次のいずれか:
+//   - GitHub App の認証情報が設定済み（本番で KEYSTATIC_GITHUB_CLIENT_ID あり）
+//   - KEYSTATIC_STORAGE=github で明示（GitHub App 作成ウィザードを起動するとき）
+// それ以外（ローカル開発・env 未設定のプレビュー）は local モード。
+// こうすることで KEYSTATIC_* 未設定でもビルドは壊れず、
 // 本番に env を設定した時点で GitHub モード（公開編集UI）へ切り替わる。
 const useGithub =
-  process.env.NODE_ENV === 'production' &&
-  !!process.env.KEYSTATIC_GITHUB_CLIENT_ID
+  !!process.env.KEYSTATIC_GITHUB_CLIENT_ID ||
+  process.env.KEYSTATIC_STORAGE === 'github'
 
 const storage = useGithub
   ? ({
