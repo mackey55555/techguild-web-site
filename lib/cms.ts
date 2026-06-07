@@ -137,11 +137,20 @@ export type ActivitySummary = {
   periodLabel: string
 }
 
-function periodFromYearMonth(ym: string): string {
+// "YYYY.MM" を「年*12 + 月」の数値に変換（ゼロ埋め有無に依存しない比較用）。
+// 解析できない場合は null。
+function yearMonthValue(ym: string): number | null {
   const [y, m] = ym.split('.').map((v) => parseInt(v, 10))
-  if (!y || !m) return ''
+  if (!y || !m) return null
+  return y * 12 + m
+}
+
+function periodFromYearMonth(ym: string): string {
+  const value = yearMonthValue(ym)
+  if (value === null) return ''
   const now = new Date()
-  let months = (now.getFullYear() - y) * 12 + (now.getMonth() + 1 - m)
+  const nowValue = now.getFullYear() * 12 + (now.getMonth() + 1)
+  let months = nowValue - value
   if (months < 0) months = 0
   const years = Math.floor(months / 12)
   const rest = months % 12
@@ -154,8 +163,15 @@ export async function getActivitySummary(): Promise<ActivitySummary> {
   const events = await getEvents()
   const eventCount = events.length
   const roundtableCount = events.filter((e) => e.eventType === 'roundtable').length
-  const dates = events.map((e) => e.date).filter(Boolean).sort() // "YYYY.MM" の文字列ソートで時系列順
-  const periodLabel = dates.length > 0 ? periodFromYearMonth(dates[0]) : ''
+  // 文字列ソートだと "2025.10" < "2025.3" のように崩れるため、年/月を数値化して最古を求める。
+  let earliest: { ym: string; value: number } | null = null
+  for (const e of events) {
+    if (!e.date) continue
+    const value = yearMonthValue(e.date)
+    if (value === null) continue
+    if (!earliest || value < earliest.value) earliest = { ym: e.date, value }
+  }
+  const periodLabel = earliest ? periodFromYearMonth(earliest.ym) : ''
   return { eventCount, roundtableCount, periodLabel }
 }
 
