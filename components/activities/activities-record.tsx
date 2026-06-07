@@ -8,6 +8,7 @@ const TYPE_LABEL: Record<EventType, string> = {
   camp: '野営会',
   talk: 'トーク',
   seminar: 'セミナー',
+  social: '懇親会',
   other: 'イベント',
 }
 

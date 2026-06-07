@@ -81,6 +81,7 @@ export default config({
             { label: '野営会', value: 'camp' },
             { label: 'トーク・LT', value: 'talk' },
             { label: 'セミナー', value: 'seminar' },
+            { label: '懇親会', value: 'social' },
             { label: 'その他', value: 'other' },
           ],
           defaultValue: 'roundtable',

@@ -16,6 +16,7 @@ export type EventType =
   | 'camp'
   | 'talk'
   | 'seminar'
+  | 'social'
   | 'other'
 
 export type EventItem = {
