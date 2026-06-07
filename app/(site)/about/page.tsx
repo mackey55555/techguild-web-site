@@ -6,12 +6,12 @@ import { AboutVision } from '@/components/about/about-vision'
 import { AboutValues } from '@/components/about/about-values'
 import { AboutTimeline } from '@/components/about/about-timeline'
 import { AboutOrganizer } from '@/components/about/about-organizer'
-import { getRoadmap, getSiteStats, extractOrganizer } from '@/lib/microcms'
+import { getRoadmap, getSiteStats, extractOrganizer } from '@/lib/cms'
 
 export const revalidate = 86400
 
 export default async function AboutPage() {
-  const [roadmapRes, stats] = await Promise.all([
+  const [roadmap, stats] = await Promise.all([
     getRoadmap(),
     getSiteStats(),
   ])
@@ -24,7 +24,7 @@ export default async function AboutPage() {
       <AboutMission />
       <AboutVision />
       <AboutValues />
-      <AboutTimeline milestones={roadmapRes.contents} />
+      <AboutTimeline milestones={roadmap} />
       <AboutOrganizer organizer={organizer} />
     </ScrollRevealProvider>
   )

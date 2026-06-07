@@ -9,7 +9,7 @@
 - **フレームワーク**: [Next.js 16](https://nextjs.org/) (App Router)
 - **言語**: TypeScript 5.7
 - **UI**: React 19 / [Tailwind CSS v4](https://tailwindcss.com/) / [shadcn/ui](https://ui.shadcn.com/) (Radix UI)
-- **CMS**: [microCMS](https://microcms.io/)
+- **CMS**: [Keystatic](https://keystatic.com/)（Git ベース・GitHub モード）
 - **フォーム**: react-hook-form + zod
 - **解析**: Vercel Analytics
 - **デプロイ**: Vercel
@@ -18,21 +18,30 @@
 
 ```
 .
-├── app/                  # Next.js App Router
-│   ├── about/            # コミュニティ紹介
-│   ├── activities/       # 活動内容・ロードマップ
-│   ├── companies/        # 企業向けページ
-│   ├── students/         # 学生向けページ
-│   ├── api/revalidate/   # microCMS Webhook 用 ISR 再検証エンドポイント
-│   ├── layout.tsx
-│   └── page.tsx          # トップページ
+├── app/
+│   ├── (site)/           # 公開サイト（Nav/Footer 付きルートグループ）
+│   │   ├── about/        # コミュニティ紹介
+│   │   ├── activities/   # 活動内容・ロードマップ
+│   │   ├── companies/    # 企業向けページ
+│   │   ├── students/     # 学生向けページ
+│   │   └── page.tsx      # トップページ
+│   ├── keystatic/        # Keystatic 管理画面 (/keystatic)
+│   ├── api/keystatic/    # Keystatic ルートハンドラ
+│   └── layout.tsx        # 最小ルートレイアウト（html/body/fonts）
+├── content/              # Keystatic のコンテンツ（Git 管理）
+│   ├── site-stats.json   # サイト統計・運営者プロフィール
+│   ├── events/           # 活動イベント一覧
+│   ├── roadmap/          # ロードマップ
+│   └── student-voices/   # 学生の声
 ├── components/           # ページごとのコンポーネント + ui/ (shadcn/ui)
 ├── hooks/                # カスタムフック
+├── keystatic.config.ts   # Keystatic スキーマ・ストレージ設定
 ├── lib/
-│   ├── microcms.ts       # microCMS クライアント・型定義・フェッチ関数
-│   ├── content.ts
+│   ├── cms.ts            # Keystatic reader・型定義・フェッチ関数
+│   ├── connpass.ts       # connpass フィードからの今後のイベント取得
+│   ├── content.ts        # 静的な日本語テキスト
 │   └── utils.ts
-├── public/               # 静的ファイル
+├── public/               # 静的ファイル（運営者写真など）
 └── styles/
 ```
 
@@ -59,24 +68,24 @@ npm install
 
 ### 4. 環境変数の設定
 
-プロジェクトルートに `.env.local` を作成し、以下を設定します。
+**ローカル開発では環境変数は不要です。** Keystatic は `NODE_ENV=development` のとき `local` モード（リポジトリ内ファイルを直接読み書き）で動くため、そのまま `npm run dev` で起動できます。
+
+本番（GitHub モード）で `/keystatic` の編集 UI を動かす場合のみ、以下を設定します（初回に `/keystatic` から GitHub App を作成すると値が発行されます）。
 
 ```bash
-# microCMS — 必須(コンテンツ取得用)
-MICROCMS_SERVICE_DOMAIN=your-service-domain
-MICROCMS_API_KEY=your-api-key
-
-# microCMS Webhook 用シークレット — 任意(ISR の再検証 API で使用)
-REVALIDATE_SECRET=your-random-secret
+KEYSTATIC_GITHUB_CLIENT_ID=...
+KEYSTATIC_GITHUB_CLIENT_SECRET=...
+KEYSTATIC_SECRET=...
+NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG=...
 ```
 
-| 変数名 | 必須 | 説明 |
-| --- | --- | --- |
-| `MICROCMS_SERVICE_DOMAIN` | ○ | microCMS のサービスドメイン (`https://<ドメイン>.microcms.io` の `<ドメイン>` 部分) |
-| `MICROCMS_API_KEY` | ○ | microCMS の API キー (GET 権限が必要) |
-| `REVALIDATE_SECRET` | △ | `/api/revalidate` を叩く際の認証用シークレット |
+| 変数名 | 説明 |
+| --- | --- |
+| `KEYSTATIC_GITHUB_CLIENT_ID` / `KEYSTATIC_GITHUB_CLIENT_SECRET` | GitHub App の認証情報 |
+| `KEYSTATIC_SECRET` | セッション署名用シークレット |
+| `NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` | 作成した GitHub App のスラッグ |
 
-> **Note**: `MICROCMS_*` が未設定の場合でも、`lib/microcms.ts` の各フェッチ関数は try/catch で fallback 値を返すため、ローカルでの UI 確認は可能です。
+> **Note**: 編集メンバーはこのリポジトリの **write 権限を持つ collaborator** である必要があります（Keystatic の編集はリポジトリへのコミットとして反映されます）。
 
 ### 5. 開発サーバーの起動
 
@@ -84,21 +93,21 @@ REVALIDATE_SECRET=your-random-secret
 npm run dev
 ```
 
-ブラウザで [http://localhost:3000](http://localhost:3000) を開いてください。
+- 公開サイト: [http://localhost:3000](http://localhost:3000)
+- 管理画面: [http://localhost:3000/keystatic](http://localhost:3000/keystatic)（local モードで GitHub App 不要）
 
-## microCMS のエンドポイント
+## コンテンツ（Keystatic）
 
-`lib/microcms.ts` で以下のエンドポイントを参照しています。同じ構造で microCMS 側にコンテンツを作成してください。
+コンテンツはリポジトリ内の `content/` にファイルとして保存され、`lib/cms.ts` の reader 経由で読み出します。スキーマは `keystatic.config.ts` を参照してください。
 
-| エンドポイント | 種別 | 用途 |
+| 種別 | 保存場所 | 用途 |
 | --- | --- | --- |
-| `roundtable-sessions` | リスト | 月次座談会の開催履歴 |
-| `student-voices` | リスト | 学生の声 |
-| `next-event` | リスト | 次回イベント告知 (`isActive` で制御) |
-| `site-stats` | オブジェクト | 参加者数・運営者プロフィールなどサイト共通情報 |
-| `roadmap` | リスト | コミュニティのロードマップ |
+| `siteStats`（singleton） | `content/site-stats.json` | 参加者数・座談会回数・継続期間・タグライン・運営者プロフィール |
+| `events`（collection） | `content/events/*.yaml` | 活動イベント（座談会・ハッカソン・野営会など、`eventType` で種別管理） |
+| `roadmap`（collection） | `content/roadmap/*.yaml` | コミュニティのロードマップ |
+| `studentVoices`（collection） | `content/student-voices/*.yaml` | 学生の声（空の場合はセクション非表示） |
 
-各スキーマの詳細フィールドは `lib/microcms.ts` の型定義 (`RoundtableSession` / `StudentVoice` / `NextEvent` / `SiteStats` / `RoadmapMilestone`) を参照してください。
+> 今後のイベント告知は connpass の公開フィード（`lib/connpass.ts`）から取得しており、CMS 管理は不要です。
 
 ## よく使うコマンド
 
@@ -109,20 +118,17 @@ npm run dev
 | `npm run start` | ビルド済みアプリを起動 |
 | `npm run lint` | ESLint を実行 |
 
-## ISR 再検証 (microCMS Webhook 連携)
+## コンテンツ更新の流れ
 
-microCMS でコンテンツを更新した際にサイト側を即時反映させるため、`POST /api/revalidate` を用意しています。
+1. `/keystatic` でコンテンツを編集（または `content/` のファイルを直接編集）
+2. GitHub モードでは編集内容がリポジトリへのコミットとして反映される
+3. Vercel が push を検知して再デプロイ → ビルド時に `lib/cms.ts` の reader がファイルを読み込み反映
 
-**使い方**: microCMS の Webhook 設定で以下を登録します。
-
-- URL: `https://<your-domain>/api/revalidate?secret=<REVALIDATE_SECRET>`
-- メソッド: POST
-
-ヘッダー `x-microcms-signature` または クエリパラメータ `secret` のいずれかが `REVALIDATE_SECRET` に一致したときに、トップ・`/about`・`/activities`・`/students` を再検証します。
+各ページには ISR の `revalidate`（connpass の今後のイベント取得用）が設定されています。
 
 ## デプロイ
 
-Vercel への接続を推奨します。リポジトリを Vercel に取り込んだ後、上記の環境変数をプロジェクト設定に登録してください。
+Vercel への接続を推奨します。リポジトリを Vercel に取り込んだ後、`/keystatic` から GitHub App を作成し、発行された `KEYSTATIC_*` 環境変数を Vercel のプロジェクト設定に登録してください。
 
 ## ライセンス
 
