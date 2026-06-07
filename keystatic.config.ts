@@ -80,6 +80,7 @@ export default config({
             { label: 'ハッカソン', value: 'hackathon' },
             { label: '野営会', value: 'camp' },
             { label: 'トーク・LT', value: 'talk' },
+            { label: 'セミナー', value: 'seminar' },
             { label: 'その他', value: 'other' },
           ],
           defaultValue: 'roundtable',
