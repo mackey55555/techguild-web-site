@@ -1,9 +1,12 @@
 name: Optimize images
 
-# Keystatic でアップロードされた画像（リポジトリにそのままコミットされる）を
-# 自動で圧縮する。ローカル編集の push でも、本番 /keystatic からの GitHub コミットでも動く。
-# - push(main): 圧縮した画像を main に直接コミットして戻す
-# - pull_request: PR ブランチに圧縮コミットを追加し、削減量をコメント
+# Keystatic でアップロードされた画像はリポジトリにそのままコミットされる。
+# push(main) 時に次を自動で行う:
+#   1. HEIC/HEIF を JPEG に変換し、content/ 内の参照ファイル名も書き換える
+#      （iOS の写真などが .heic のまま入ると主要ブラウザ/next/image で表示できないため）
+#   2. jpg/png/webp をまとめて圧縮（calibreapp/image-actions）
+#   3. 変更があれば 1 コミットにまとめて push
+# bot の push は GITHUB_TOKEN なのでワークフローを再トリガーしない（無限ループしない）。
 on:
   push:
     branches: [main]
@@ -12,27 +15,61 @@ on:
       - '**.jpeg'
       - '**.png'
       - '**.webp'
-  pull_request:
-    paths:
-      - '**.jpg'
-      - '**.jpeg'
-      - '**.png'
-      - '**.webp'
+      - '**.heic'
+      - '**.heif'
+      - '**.HEIC'
+      - '**.HEIF'
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
   optimize:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Compress images
+
+      - name: Install libheif (heif-convert)
+        run: sudo apt-get update && sudo apt-get install -y libheif-examples
+
+      - name: Convert HEIC/HEIF to JPEG and update references
+        run: |
+          shopt -s nullglob nocaseglob globstar
+          converted=0
+          for f in content/**/*.heic content/**/*.heif public/**/*.heic public/**/*.heif; do
+            [ -f "$f" ] || continue
+            out="${f%.*}.jpg"
+            echo "Converting: $f -> $out"
+            heif-convert -q 90 "$f" "$out"
+            oldb="$(basename "$f")"
+            newb="$(basename "$out")"
+            # Keystatic は画像フィールドにファイル名のみを保存するため、content/ の参照を置換
+            while IFS= read -r ref; do
+              perl -i -pe "s/\Q$oldb\E/$newb/g" "$ref"
+              echo "  updated reference in $ref"
+            done < <(grep -rIl --include='*.yaml' --include='*.yml' --include='*.json' -F "$oldb" content 2>/dev/null || true)
+            rm -f "$f"
+            converted=$((converted+1))
+          done
+          echo "converted=$converted"
+
+      - name: Compress images (no commit)
         uses: calibreapp/image-actions@main
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          # 画質（数値が小さいほど高圧縮）。写真は 80 前後が見た目と容量のバランス良好。
+          compressOnly: true
           jpegQuality: '80'
           pngQuality: '80'
           webpQuality: '80'
+
+      - name: Commit optimized images
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "chore: optimize images (heic->jpg / compress) [skip ci]"
+            git push
+          else
+            echo "No image changes to commit."
+          fi
