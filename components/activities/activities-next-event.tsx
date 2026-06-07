@@ -1,5 +1,3 @@
-import Link from 'next/link'
-import type { NextEvent } from '@/lib/microcms'
 import {
   CONNPASS_GROUP_URL,
   type ConnpassEvent,
@@ -7,10 +5,8 @@ import {
 import { formatEventDate } from '@/lib/date'
 
 export function ActivitiesNextEvent({
-  event,
   connpassEvents,
 }: {
-  event: NextEvent | null
   connpassEvents: ConnpassEvent[]
 }) {
   const hasConnpass = connpassEvents.length > 0
@@ -31,7 +27,7 @@ export function ActivitiesNextEvent({
         {hasConnpass ? (
           <ConnpassUpcoming events={connpassEvents} />
         ) : (
-          <Fallback event={event} />
+          <Fallback />
         )}
 
         <a
@@ -127,14 +123,7 @@ function ConnpassUpcoming({ events }: { events: ConnpassEvent[] }) {
   )
 }
 
-function Fallback({ event }: { event: NextEvent | null }) {
-  const headline = event ? event.headline : '次回のイベントは\n近日公開予定。'
-  const subtext = event
-    ? event.subtext
-    : '詳細はSNSまたはメールマガジンにてお知らせします。'
-  const ctaLabel = event ? event.ctaLabel : '参加申込みはこちら →'
-  const ctaHref = event ? event.ctaHref : '/students'
-
+function Fallback() {
   return (
     <>
       <h2
@@ -144,24 +133,11 @@ function Fallback({ event }: { event: NextEvent | null }) {
           color: 'var(--cream)',
         }}
       >
-        {headline}
+        {'次回のイベントは\n近日公開予定。'}
       </h2>
       <p className="text-sm opacity-60 reveal" style={{ color: 'var(--cream)' }}>
-        {subtext}
+        詳細はSNSまたはメールマガジンにてお知らせします。
       </p>
-      {event && (
-        <Link
-          href={ctaHref}
-          className="inline-block px-10 py-4 font-bold text-base border-2 reveal transition-all duration-300 hover:bg-transparent"
-          style={{
-            borderColor: 'var(--gold)',
-            backgroundColor: 'var(--gold)',
-            color: 'var(--forest)',
-          }}
-        >
-          {ctaLabel}
-        </Link>
-      )}
     </>
   )
 }

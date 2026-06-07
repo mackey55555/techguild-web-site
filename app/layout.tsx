@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import { Playfair_Display, Plus_Jakarta_Sans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { Nav } from '@/components/nav'
-import { Footer } from '@/components/footer'
 import './globals.css'
 
 const playfair = Playfair_Display({
@@ -39,9 +37,7 @@ export default function RootLayout({
   return (
     <html lang="ja" data-scroll-behavior="smooth" className={`${playfair.variable} ${plusJakarta.variable}`}>
       <body className="font-sans antialiased bg-background text-foreground">
-        <Nav />
-        <main>{children}</main>
-        <Footer />
+        {children}
         <Analytics />
       </body>
     </html>

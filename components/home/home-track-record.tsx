@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import type { SiteStats } from '@/lib/microcms'
+import type { SiteStats } from '@/lib/cms'
 
 function StatBox({ value, label }: { value: string; label: string }) {
   const ref = useRef<HTMLDivElement>(null)

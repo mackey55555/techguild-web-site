@@ -1,13 +1,9 @@
-import type { StudentVoice } from '@/lib/microcms'
-
-const FALLBACK_VOICES: StudentVoice[] = [
-  { id: '1', name: '田中さん', university: '○○大学 工学部 3年', quote: '授業で学んだ知識だけでは不安でしたが、Tech Guildで実際のプロダクトを作ったことで自信がつきました。チームメンバーとの協力も良い経験になりました。', displayOrder: 1 },
-  { id: '2', name: '鈴木さん', university: '△△大学 情報科学科 4年', quote: '就活の面接で「実際にリリースしたアプリがある」と言えたのは大きかったです。企業の方との打ち合わせ経験も、社会人になってから役立っています。', displayOrder: 2 },
-  { id: '3', name: '山田さん', university: '□□大学 経済学部 2年', quote: '文系出身でプログラミング歴も浅かったですが、デザインや企画でも貢献できました。技術だけじゃない「ものづくり」の楽しさを知れました。', displayOrder: 3 },
-]
+import type { StudentVoice } from '@/lib/cms'
 
 export function StudentsVoices({ voices }: { voices: StudentVoice[] }) {
-  const data = voices.length > 0 ? voices : FALLBACK_VOICES
+  // 実データが無い間はセクションごと非表示にする
+  if (voices.length === 0) return null
+  const data = voices
   return (
     <section className="py-20 md:py-28" style={{ backgroundColor: 'var(--cream)' }}>
       <div className="max-w-6xl mx-auto px-6">
@@ -27,9 +23,9 @@ export function StudentsVoices({ voices }: { voices: StudentVoice[] }) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {data.map((voice, idx) => (
+          {data.map((voice) => (
             <div
-              key={idx}
+              key={voice.slug}
               className="p-8 border-2 flex flex-col reveal"
               style={{ borderColor: 'var(--forest)', backgroundColor: 'rgba(250,246,238,0.5)' }}
             >

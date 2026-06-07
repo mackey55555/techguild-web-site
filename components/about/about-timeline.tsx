@@ -1,13 +1,10 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import type { RoadmapMilestone } from '@/lib/microcms'
-import fallbackMilestones from '@/data/roadmap-milestones.json'
-
-const FALLBACK_MILESTONES = fallbackMilestones as RoadmapMilestone[]
+import type { RoadmapMilestone } from '@/lib/cms'
 
 export function AboutTimeline({ milestones }: { milestones: RoadmapMilestone[] }) {
-  const data = milestones.length > 0 ? milestones : FALLBACK_MILESTONES
+  const data = milestones
   const lineRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

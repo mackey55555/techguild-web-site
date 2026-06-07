@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export function HomeActivities() {
+export function HomeActivities({ sessionCount }: { sessionCount: string }) {
   return (
     <section
       className="relative py-20 md:py-28 px-6 md:px-10 clip-diagonal-top"
@@ -77,10 +77,10 @@ export function HomeActivities() {
                 className="font-serif font-black leading-none"
                 style={{ fontSize: 'clamp(48px, 8vw, 80px)', color: 'var(--forest)' }}
               >
-                12回
+                {sessionCount}回
               </p>
               <p className="text-xs font-semibold mt-1 uppercase tracking-widest" style={{ color: 'var(--forest)', opacity: 0.7 }}>
-                連続開催
+                座談会開催
               </p>
             </div>
 

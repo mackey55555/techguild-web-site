@@ -5,7 +5,7 @@ import { StudentsWhyJoin } from '@/components/students/students-why-join'
 import { StudentsWhoFits } from '@/components/students/students-who-fits'
 import { StudentsVoices } from '@/components/students/students-voices'
 import { StudentsCta } from '@/components/students/students-cta'
-import { getStudentVoices } from '@/lib/microcms'
+import { getStudentVoices } from '@/lib/cms'
 import { getConnpassUpcomingEvents } from '@/lib/connpass'
 
 export const revalidate = 3600
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 }
 
 export default async function StudentsPage() {
-  const [voicesRes, connpassEvents] = await Promise.all([
+  const [voices, connpassEvents] = await Promise.all([
     getStudentVoices(),
     getConnpassUpcomingEvents(),
   ])
@@ -26,7 +26,7 @@ export default async function StudentsPage() {
       <StudentsHero />
       <StudentsWhyJoin />
       <StudentsWhoFits />
-      <StudentsVoices voices={voicesRes.contents} />
+      <StudentsVoices voices={voices} />
       <StudentsCta connpassEvents={connpassEvents} />
     </ScrollRevealProvider>
   )

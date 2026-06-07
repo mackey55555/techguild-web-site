@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import type { Organizer } from '@/lib/microcms'
+import type { Organizer } from '@/lib/cms'
 
 export function AboutOrganizer({ organizer }: { organizer: Organizer }) {
   return (
@@ -13,13 +13,15 @@ export function AboutOrganizer({ organizer }: { organizer: Organizer }) {
           {/* Photo */}
           <div className="md:col-span-4 reveal">
             {organizer.photo ? (
-              <Image
-                src={organizer.photo.url}
-                width={organizer.photo.width}
-                height={organizer.photo.height}
-                alt={organizer.name}
-                className="w-full aspect-square object-cover max-w-64"
-              />
+              <div className="relative w-full aspect-square max-w-64">
+                <Image
+                  src={organizer.photo}
+                  alt={organizer.name}
+                  fill
+                  sizes="256px"
+                  className="object-cover"
+                />
+              </div>
             ) : (
               <div
                 className="w-full aspect-square max-w-64 border-2 flex items-center justify-center"
@@ -56,8 +58,11 @@ export function AboutOrganizer({ organizer }: { organizer: Organizer }) {
             <div
               className="text-base leading-relaxed reveal flex flex-col gap-5"
               style={{ color: 'var(--forest)', opacity: 0.82 }}
-              dangerouslySetInnerHTML={{ __html: organizer.bio }}
-            />
+            >
+              {organizer.bio.map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))}
+            </div>
           </div>
 
         </div>
