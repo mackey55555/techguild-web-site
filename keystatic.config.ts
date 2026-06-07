@@ -1,13 +1,19 @@
 import { config, fields, collection, singleton } from '@keystatic/core'
 
-// 開発時は GitHub App なしで編集できる local モード、本番は GitHub モード。
-const storage =
-  process.env.NODE_ENV === 'development'
-    ? ({ kind: 'local' } as const)
-    : ({
-        kind: 'github',
-        repo: 'mackey55555/techguild-web-site',
-      } as const)
+// GitHub App の認証情報が揃っている本番でのみ GitHub モード、
+// それ以外（ローカル開発・env 未設定のプレビュー）は local モードにする。
+// こうすることで KEYSTATIC_* 未設定でもビルドが壊れず、
+// 本番に env を設定した時点で GitHub モード（公開編集UI）へ切り替わる。
+const useGithub =
+  process.env.NODE_ENV === 'production' &&
+  !!process.env.KEYSTATIC_GITHUB_CLIENT_ID
+
+const storage = useGithub
+  ? ({
+      kind: 'github',
+      repo: 'mackey55555/techguild-web-site',
+    } as const)
+  : ({ kind: 'local' } as const)
 
 export default config({
   storage,
