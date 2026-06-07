@@ -129,6 +129,36 @@ export function extractOrganizer(stats: SiteStats): Organizer {
   }
 }
 
+// events コレクションから集計値を自動算出（手動メンテ不要）。
+// 参加者数だけは events から導けないため site-stats（手動）を使う。
+export type ActivitySummary = {
+  eventCount: number
+  roundtableCount: number
+  periodLabel: string
+}
+
+function periodFromYearMonth(ym: string): string {
+  const [y, m] = ym.split('.').map((v) => parseInt(v, 10))
+  if (!y || !m) return ''
+  const now = new Date()
+  let months = (now.getFullYear() - y) * 12 + (now.getMonth() + 1 - m)
+  if (months < 0) months = 0
+  const years = Math.floor(months / 12)
+  const rest = months % 12
+  if (years === 0) return `${rest}ヶ月`
+  if (rest === 0) return `${years}年`
+  return `${years}年${rest}ヶ月`
+}
+
+export async function getActivitySummary(): Promise<ActivitySummary> {
+  const events = await getEvents()
+  const eventCount = events.length
+  const roundtableCount = events.filter((e) => e.eventType === 'roundtable').length
+  const dates = events.map((e) => e.date).filter(Boolean).sort() // "YYYY.MM" の文字列ソートで時系列順
+  const periodLabel = dates.length > 0 ? periodFromYearMonth(dates[0]) : ''
+  return { eventCount, roundtableCount, periodLabel }
+}
+
 export async function getRoadmap(): Promise<RoadmapMilestone[]> {
   const all = await reader.collections.roadmap.all()
   return all

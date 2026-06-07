@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import type { SiteStats } from '@/lib/cms'
 
 function StatBox({ value, label }: { value: string; label: string }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -47,7 +46,17 @@ function StatBox({ value, label }: { value: string; label: string }) {
   )
 }
 
-export function HomeTrackRecord({ stats }: { stats: SiteStats }) {
+export function HomeTrackRecord({
+  participantCount,
+  eventCount,
+  periodLabel,
+  tagline,
+}: {
+  participantCount: string
+  eventCount: number
+  periodLabel: string
+  tagline: string
+}) {
   return (
     <section
       className="relative py-20 md:py-28 px-6 md:px-10"
@@ -80,9 +89,9 @@ export function HomeTrackRecord({ stats }: { stats: SiteStats }) {
         </p>
 
         <div className="grid grid-cols-3 gap-4 md:gap-6 mb-12 reveal">
-          <StatBox value={stats.participantCount} label="参加者" />
-          <StatBox value={stats.sessionCount} label="座談会" />
-          <StatBox value={stats.continuationLabel} label="継続" />
+          <StatBox value={participantCount} label="参加者" />
+          <StatBox value={`${eventCount}`} label="イベント" />
+          <StatBox value={periodLabel} label="活動" />
         </div>
 
         <p
@@ -92,7 +101,7 @@ export function HomeTrackRecord({ stats }: { stats: SiteStats }) {
             color: 'var(--gold)',
           }}
         >
-          {stats.tagline}
+          {tagline}
         </p>
       </div>
     </section>

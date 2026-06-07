@@ -40,12 +40,12 @@ export function CompaniesCoCreate() {
             color: 'var(--cream)',
           }}
         >
-          企業も、<br />
-          <span style={{ color: 'var(--gold)' }}>ここでは学ぶ側です。</span>
+          未来の仲間と、<br />
+          <span style={{ color: 'var(--gold)' }}>今から出会う。</span>
         </blockquote>
 
         <p className="text-base leading-relaxed max-w-xl reveal" style={{ color: 'var(--cream)', opacity: 0.8 }}>
-          指導する側・される側という関係は、ここにはない。企業の担当者も、学生と同じチームで、同じ課題に向き合う。そこから生まれるものが、このコミュニティの価値です。
+          このコミュニティの主役は、学生の成長です。関わってくださる企業には、その学生たちと早くから接点を持っていただけます。短期的な採用活動ではなく、長期的な関係づくりや地域への貢献という形で、共に未来の人材を育てていきませんか。
         </p>
       </div>
     </section>

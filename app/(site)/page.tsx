@@ -6,14 +6,15 @@ import { HomeActivities } from '@/components/home/home-activities'
 import { HomeTrackRecord } from '@/components/home/home-track-record'
 import { HomeCommunityFeel } from '@/components/home/home-community-feel'
 import { HomeDualCta } from '@/components/home/home-dual-cta'
-import { getSiteStats } from '@/lib/cms'
+import { getSiteStats, getActivitySummary } from '@/lib/cms'
 import { getConnpassUpcomingEvents } from '@/lib/connpass'
 
 export const revalidate = 3600
 
 export default async function HomePage() {
-  const [stats, connpassEvents] = await Promise.all([
+  const [stats, summary, connpassEvents] = await Promise.all([
     getSiteStats(),
+    getActivitySummary(),
     getConnpassUpcomingEvents(),
   ])
 
@@ -22,8 +23,13 @@ export default async function HomePage() {
       <HomeHero />
       <HomeNextEvent events={connpassEvents} />
       <HomeMVV />
-      <HomeActivities sessionCount={stats.sessionCount} />
-      <HomeTrackRecord stats={stats} />
+      <HomeActivities eventCount={summary.eventCount} />
+      <HomeTrackRecord
+        participantCount={stats.participantCount}
+        eventCount={summary.eventCount}
+        periodLabel={summary.periodLabel}
+        tagline={stats.tagline}
+      />
       <HomeCommunityFeel />
       <HomeDualCta />
     </ScrollRevealProvider>

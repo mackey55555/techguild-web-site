@@ -26,7 +26,7 @@ export function ActivitiesRoundtable() {
                   className="font-serif font-black opacity-15"
                   style={{ fontSize: 'clamp(32px, 6vw, 60px)', color: 'var(--cream)' }}
                 >
-                  DINNER
+                  TALK
                 </p>
               </div>
             </div>
@@ -38,7 +38,7 @@ export function ActivitiesRoundtable() {
               className="text-xs uppercase tracking-widest font-bold reveal"
               style={{ color: 'rgba(250,246,238,0.5)', letterSpacing: '0.25em' }}
             >
-              Roundtable &amp; Dinner
+              Roundtable
             </p>
 
             {/* Big headline */}
@@ -49,15 +49,15 @@ export function ActivitiesRoundtable() {
                 color: 'var(--gold)',
               }}
             >
-              12ヶ月、<br />欠かさずやってきた。
+              毎月、技術と<br />本音を交わす。
             </p>
 
             <div className="space-y-4">
               <p className="text-base leading-relaxed reveal" style={{ color: 'var(--cream)', opacity: 0.85 }}>
-                月に一度、ご飯を食べながら話す。それだけのことだが、毎回何かが動く。社会人と学生が同じテーブルで、本音で話せる夜。
+                LTや最近の技術の話、日々の悩み相談まで。学生と社会人が混ざって、ゆるく、でも深く語り合う。決まったアジェンダはなく、立場を越えてフラットに話せる場です。
               </p>
               <p className="text-base leading-relaxed reveal" style={{ color: 'var(--cream)', opacity: 0.85 }}>
-                「キャリアの話」もあれば、「今週起きたこと」もある。決まったアジェンダはない。ただ、毎回続いてきたのには理由がある。
+                毎回いろんなテーマが飛び交い、新しい気づきが生まれる。会のあとには、希望者で懇親会も。
               </p>
             </div>
 
