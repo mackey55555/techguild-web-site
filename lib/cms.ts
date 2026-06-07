@@ -10,7 +10,13 @@ const ORGANIZER_PHOTO_PUBLIC_PATH = '/images/organizer/'
 
 // ---- 型定義 ----
 
-export type EventType = 'roundtable' | 'hackathon' | 'camp' | 'talk' | 'other'
+export type EventType =
+  | 'roundtable'
+  | 'hackathon'
+  | 'camp'
+  | 'talk'
+  | 'seminar'
+  | 'other'
 
 export type EventItem = {
   slug: string
