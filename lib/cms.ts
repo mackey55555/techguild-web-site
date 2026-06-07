@@ -114,10 +114,19 @@ export async function getSiteStats(): Promise<SiteStats> {
     organizerName: s.organizerName,
     organizerRole: s.organizerRole,
     organizerBio: [...s.organizerBio],
-    organizerPhoto: s.organizerPhoto
-      ? `${ORGANIZER_PHOTO_PUBLIC_PATH}${s.organizerPhoto}`
-      : null,
+    organizerPhoto: resolveOrganizerPhoto(s.organizerPhoto),
   }
+}
+
+// Keystatic の管理画面で保存すると organizerPhoto は publicPath 込みの
+// 絶対パス（例: /images/organizer/xxx.jpeg）で保存される。一方で手書きで
+// ファイル名だけを入れた場合に備え、'/' 始まりはそのまま、それ以外は
+// publicPath を前置する（二重前置による 404 を防ぐ）。
+function resolveOrganizerPhoto(value: string | null | undefined): string | null {
+  if (!value) return null
+  return value.startsWith('/')
+    ? value
+    : `${ORGANIZER_PHOTO_PUBLIC_PATH}${value}`
 }
 
 export function extractOrganizer(stats: SiteStats): Organizer {
