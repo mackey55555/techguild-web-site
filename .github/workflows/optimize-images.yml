@@ -1,0 +1,38 @@
+name: Optimize images
+
+# Keystatic でアップロードされた画像（リポジトリにそのままコミットされる）を
+# 自動で圧縮する。ローカル編集の push でも、本番 /keystatic からの GitHub コミットでも動く。
+# - push(main): 圧縮した画像を main に直接コミットして戻す
+# - pull_request: PR ブランチに圧縮コミットを追加し、削減量をコメント
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.jpg'
+      - '**.jpeg'
+      - '**.png'
+      - '**.webp'
+  pull_request:
+    paths:
+      - '**.jpg'
+      - '**.jpeg'
+      - '**.png'
+      - '**.webp'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compress images
+        uses: calibreapp/image-actions@main
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          # 画質（数値が小さいほど高圧縮）。写真は 80 前後が見た目と容量のバランス良好。
+          jpegQuality: '80'
+          pngQuality: '80'
+          webpQuality: '80'
