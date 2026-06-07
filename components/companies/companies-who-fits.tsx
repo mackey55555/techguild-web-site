@@ -45,7 +45,7 @@ export function CompaniesWhoFits() {
           className="font-serif font-bold reveal"
           style={{ fontSize: 'clamp(16px, 2.8vw, 26px)', color: 'var(--terra)' }}
         >
-          このページを読んで何かを感じたなら、<br />きっと合います。
+          少しでもご関心をお持ちいただけましたら、<br />ぜひ一度お話しさせてください。
         </p>
       </div>
     </section>

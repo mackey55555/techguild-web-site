@@ -129,6 +129,52 @@ export function extractOrganizer(stats: SiteStats): Organizer {
   }
 }
 
+// events コレクションから集計値を自動算出（手動メンテ不要）。
+// 参加者数だけは events から導けないため site-stats（手動）を使う。
+export type ActivitySummary = {
+  eventCount: number
+  roundtableCount: number
+  periodLabel: string
+}
+
+// "YYYY.MM" を「年*12 + 月」の数値に変換（ゼロ埋め有無に依存しない比較用）。
+// 解析できない場合は null。
+function yearMonthValue(ym: string): number | null {
+  const [y, m] = ym.split('.').map((v) => parseInt(v, 10))
+  if (!y || !m) return null
+  return y * 12 + m
+}
+
+function periodFromYearMonth(ym: string): string {
+  const value = yearMonthValue(ym)
+  if (value === null) return ''
+  const now = new Date()
+  const nowValue = now.getFullYear() * 12 + (now.getMonth() + 1)
+  let months = nowValue - value
+  if (months < 0) months = 0
+  const years = Math.floor(months / 12)
+  const rest = months % 12
+  if (years === 0) return `${rest}ヶ月`
+  if (rest === 0) return `${years}年`
+  return `${years}年${rest}ヶ月`
+}
+
+export async function getActivitySummary(): Promise<ActivitySummary> {
+  const events = await getEvents()
+  const eventCount = events.length
+  const roundtableCount = events.filter((e) => e.eventType === 'roundtable').length
+  // 文字列ソートだと "2025.10" < "2025.3" のように崩れるため、年/月を数値化して最古を求める。
+  let earliest: { ym: string; value: number } | null = null
+  for (const e of events) {
+    if (!e.date) continue
+    const value = yearMonthValue(e.date)
+    if (value === null) continue
+    if (!earliest || value < earliest.value) earliest = { ym: e.date, value }
+  }
+  const periodLabel = earliest ? periodFromYearMonth(earliest.ym) : ''
+  return { eventCount, roundtableCount, periodLabel }
+}
+
 export async function getRoadmap(): Promise<RoadmapMilestone[]> {
   const all = await reader.collections.roadmap.all()
   return all

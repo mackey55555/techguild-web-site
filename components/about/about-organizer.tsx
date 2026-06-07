@@ -48,6 +48,12 @@ export function AboutOrganizer({ organizer }: { organizer: Organizer }) {
 
           {/* Text */}
           <div className="md:col-span-8 flex flex-col gap-5">
+            <p
+              className="text-xs uppercase tracking-widest font-bold reveal"
+              style={{ color: 'var(--terra)', letterSpacing: '0.25em' }}
+            >
+              Founder ／ ギルドマスター
+            </p>
             <h2
               className="font-serif font-black leading-tight reveal"
               style={{ fontSize: 'clamp(22px, 3.5vw, 40px)', color: 'var(--forest)' }}

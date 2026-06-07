@@ -2,6 +2,7 @@ import { ScrollRevealProvider } from '@/components/scroll-reveal-provider'
 import { ActivitiesHero } from '@/components/activities/activities-hero'
 import { ActivitiesHackathon } from '@/components/activities/activities-hackathon'
 import { ActivitiesRoundtable } from '@/components/activities/activities-roundtable'
+import { ActivitiesOther } from '@/components/activities/activities-other'
 import { ActivitiesRecord } from '@/components/activities/activities-record'
 import { ActivitiesNextEvent } from '@/components/activities/activities-next-event'
 import { getEvents } from '@/lib/cms'
@@ -20,6 +21,7 @@ export default async function ActivitiesPage() {
       <ActivitiesHero />
       <ActivitiesHackathon />
       <ActivitiesRoundtable />
+      <ActivitiesOther />
       <ActivitiesRecord events={events} />
       <ActivitiesNextEvent connpassEvents={connpassEvents} />
     </ScrollRevealProvider>

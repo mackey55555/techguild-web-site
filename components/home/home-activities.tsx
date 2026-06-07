@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export function HomeActivities({ sessionCount }: { sessionCount: string }) {
+export function HomeActivities({ eventCount }: { eventCount: number }) {
   return (
     <section
       className="relative py-20 md:py-28 px-6 md:px-10 clip-diagonal-top"
@@ -29,14 +29,14 @@ export function HomeActivities({ sessionCount }: { sessionCount: string }) {
                 className="font-serif font-black leading-tight mb-4"
                 style={{ fontSize: 'clamp(28px, 5vw, 52px)', color: 'var(--forest)' }}
               >
-                企業 × 学生<br />で開発する。
+                学生と社会人<br />で開発する。
               </h3>
               <div
                 className="h-1 w-20 mb-4"
                 style={{ backgroundColor: 'var(--gold)' }}
               />
               <p className="text-sm leading-relaxed max-w-sm" style={{ color: 'var(--forest)', opacity: 0.75 }}>
-                テーマを持ち寄り、同じチームでプロダクトをゼロからつくる。学生も社会人も同じスタートライン。
+                同じチームでプロダクトをゼロからつくる。学生も社会人も同じスタートラインから、ものづくりに挑む。
               </p>
             </div>
             <Link
@@ -57,10 +57,10 @@ export function HomeActivities({ sessionCount }: { sessionCount: string }) {
               style={{ borderColor: 'var(--forest)', backgroundColor: 'var(--cream)' }}
             >
               <p className="text-xs uppercase tracking-widest font-bold mb-3" style={{ color: 'var(--terra)' }}>
-                Roundtable &amp; Dinner
+                Roundtable
               </p>
               <p className="font-serif font-bold text-lg leading-snug" style={{ color: 'var(--forest)' }}>
-                毎月、話して、食べて、また来たくなる夜。
+                LTや技術の話、悩み相談まで。混ざって語る座談会。
               </p>
             </div>
 
@@ -77,10 +77,10 @@ export function HomeActivities({ sessionCount }: { sessionCount: string }) {
                 className="font-serif font-black leading-none"
                 style={{ fontSize: 'clamp(48px, 8vw, 80px)', color: 'var(--forest)' }}
               >
-                {sessionCount}回
+                {eventCount}回
               </p>
               <p className="text-xs font-semibold mt-1 uppercase tracking-widest" style={{ color: 'var(--forest)', opacity: 0.7 }}>
-                座談会開催
+                イベント開催
               </p>
             </div>
 
