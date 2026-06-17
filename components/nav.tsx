@@ -55,8 +55,14 @@ export function Nav() {
           ))}
         </nav>
 
-        {/* CTA */}
-        <div className="hidden md:flex items-center gap-4">
+        {/* CTA — 学生(gold) / 企業(forest) で分岐 */}
+        <div className="hidden md:flex items-center gap-3">
+          <Link
+            href="/students"
+            className="btn-gold text-sm font-semibold px-5 py-2 rounded-full border-[1.5px]"
+          >
+            学生の方
+          </Link>
           <Link
             href="/companies#contact"
             className="btn-fill-left text-sm font-semibold px-5 py-2 rounded-full transition-colors duration-200"
@@ -98,14 +104,28 @@ export function Nav() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/companies#contact"
-            onClick={() => setMenuOpen(false)}
-            className="inline-block text-sm font-semibold px-5 py-2 rounded-full text-center mt-2"
-            style={{ backgroundColor: 'var(--forest)', color: 'var(--cream)' }}
-          >
-            お問い合わせ
-          </Link>
+          <div className="flex flex-col gap-3 mt-2">
+            <Link
+              href="/students"
+              onClick={() => setMenuOpen(false)}
+              className="inline-block text-sm font-semibold px-5 py-2 rounded-full text-center"
+              style={{
+                backgroundColor: 'var(--gold)',
+                color: 'var(--forest)',
+                border: '1.5px solid var(--gold)',
+              }}
+            >
+              学生の方
+            </Link>
+            <Link
+              href="/companies#contact"
+              onClick={() => setMenuOpen(false)}
+              className="inline-block text-sm font-semibold px-5 py-2 rounded-full text-center"
+              style={{ backgroundColor: 'var(--forest)', color: 'var(--cream)' }}
+            >
+              お問い合わせ
+            </Link>
+          </div>
         </div>
       )}
     </header>
