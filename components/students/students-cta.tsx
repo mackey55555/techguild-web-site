@@ -4,9 +4,8 @@ import {
 } from '@/lib/connpass'
 import { formatEventDate } from '@/lib/date'
 
-// TODO: LINE 公式アカウントの「友だち追加」URL（lin.ee/xxxx 形式）に差し替える。
-// QR 画像 (public/2dbarcodes_GW/) からはリンク先 URL を取得できないため別途設定が必要。
-const LINE_ADD_FRIEND_URL = 'https://lin.ee/REPLACE_ME'
+// LINE 公式アカウントの「友だち追加」URL。
+const LINE_ADD_FRIEND_URL = 'https://lin.ee/PYxrNX7'
 
 export function StudentsCta({
   connpassEvents,
