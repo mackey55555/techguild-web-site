@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { CompaniesContactForm } from '@/components/companies/companies-contact-form'
 
 export function CompaniesCta() {
   return (
@@ -38,20 +38,14 @@ export function CompaniesCta() {
         </h2>
 
         <p className="text-base leading-relaxed opacity-75 reveal" style={{ color: 'var(--cream)' }}>
-          {'フォームからでも、SNSのDMからでも。'}
+          {'下記フォームからお気軽にどうぞ。'}
           <br />
-          {'どんな小さな疑問でも、気軽にどうぞ。'}
+          {'どんな小さな疑問・ご相談でも歓迎です。'}
         </p>
 
-        <Link
-          href="mailto:hello@techguild.jp"
-          className="inline-block px-10 py-4 font-bold text-base border-2 reveal btn-gold"
-          style={{
-            borderColor: 'var(--gold)',
-          }}
-        >
-          {'お問い合わせ・相談する'}
-        </Link>
+        <div className="w-full reveal">
+          <CompaniesContactForm />
+        </div>
       </div>
     </section>
   )
