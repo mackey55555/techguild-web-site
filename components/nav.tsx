@@ -58,21 +58,16 @@ export function Nav() {
         {/* CTA — 学生(gold) / 企業(forest) で分岐 */}
         <div className="hidden md:flex items-center gap-3">
           <Link
-            href="/students"
+            href="/students#join"
             className="btn-gold text-sm font-semibold px-5 py-2 rounded-full border-[1.5px]"
           >
-            学生の方
+            学生はLINEへ
           </Link>
           <Link
             href="/companies#contact"
-            className="btn-fill-left text-sm font-semibold px-5 py-2 rounded-full transition-colors duration-200"
-            style={{
-              backgroundColor: 'var(--forest)',
-              color: 'var(--cream)',
-              border: '1.5px solid var(--forest)',
-            }}
+            className="btn-forest text-sm font-semibold px-5 py-2 rounded-full border-[1.5px]"
           >
-            <span className="relative z-10" style={{ color: 'var(--cream)' }}>お問い合わせ</span>
+            企業の問い合わせ
           </Link>
         </div>
 
@@ -106,24 +101,18 @@ export function Nav() {
           ))}
           <div className="flex flex-col gap-3 mt-2">
             <Link
-              href="/students"
+              href="/students#join"
               onClick={() => setMenuOpen(false)}
-              className="inline-block text-sm font-semibold px-5 py-2 rounded-full text-center"
-              style={{
-                backgroundColor: 'var(--gold)',
-                color: 'var(--forest)',
-                border: '1.5px solid var(--gold)',
-              }}
+              className="btn-gold inline-block text-sm font-semibold px-5 py-2 rounded-full border-[1.5px] text-center"
             >
-              学生の方
+              学生はLINEへ
             </Link>
             <Link
               href="/companies#contact"
               onClick={() => setMenuOpen(false)}
-              className="inline-block text-sm font-semibold px-5 py-2 rounded-full text-center"
-              style={{ backgroundColor: 'var(--forest)', color: 'var(--cream)' }}
+              className="btn-forest inline-block text-sm font-semibold px-5 py-2 rounded-full border-[1.5px] text-center"
             >
-              お問い合わせ
+              企業の問い合わせ
             </Link>
           </div>
         </div>

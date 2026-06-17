@@ -4,7 +4,7 @@ export function CompaniesCta() {
   return (
     <section
       id="contact"
-      className="relative py-24 md:py-32 px-6 md:px-10 clip-diagonal-top text-center overflow-hidden"
+      className="relative scroll-mt-20 py-24 md:py-32 px-6 md:px-10 clip-diagonal-top text-center overflow-hidden"
       style={{ backgroundColor: 'var(--forest)' }}
     >
       {/* Decorative bg text */}
