@@ -16,7 +16,8 @@ export function StudentsCta({
 
   return (
     <section
-      className="py-24 md:py-32 px-6"
+      id="join"
+      className="scroll-mt-20 py-24 md:py-32 px-6"
       style={{
         background: 'linear-gradient(135deg, var(--gold) 0%, #e6b732 100%)',
       }}
