@@ -4,6 +4,9 @@ import {
 } from '@/lib/connpass'
 import { formatEventDate } from '@/lib/date'
 
+// LINE 公式アカウントの「友だち追加」URL。
+const LINE_ADD_FRIEND_URL = 'https://lin.ee/PYxrNX7'
+
 export function StudentsCta({
   connpassEvents,
 }: {
@@ -47,7 +50,7 @@ export function StudentsCta({
             connpass グループを見る →
           </a>
           <a
-            href="https://forms.example.com/student-interest"
+            href={LINE_ADD_FRIEND_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-8 py-4 font-bold text-sm transition-all duration-300 border-2 reveal"
@@ -57,20 +60,31 @@ export function StudentsCta({
               color: 'var(--forest)',
             }}
           >
-            興味あるリストに登録
+            LINEで相談・友だち追加
           </a>
         </div>
 
-        <p
-          className="text-sm mt-8 reveal"
-          style={{ color: 'var(--forest)', opacity: 0.6 }}
-        >
-          {'質問やご相談は '}
-          <a href="mailto:students@techguild.example.com" className="underline">
-            {'students@techguild.example.com'}
-          </a>
-          {' まで'}
-        </p>
+        <div className="mt-10 flex flex-col items-center gap-3 reveal">
+          <div
+            className="p-3 border-2"
+            style={{
+              backgroundColor: 'var(--cream)',
+              borderColor: 'var(--forest)',
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/2dbarcodes_GW/M_gainfriends_2dbarcodes_GW.png"
+              alt="Tech Guild LINE公式アカウント 友だち追加QRコード"
+              width={148}
+              height={148}
+              className="block"
+            />
+          </div>
+          <p className="text-sm" style={{ color: 'var(--forest)', opacity: 0.7 }}>
+            質問やご相談は LINE 公式アカウントへ
+          </p>
+        </div>
       </div>
     </section>
   )
