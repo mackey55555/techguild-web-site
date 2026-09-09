@@ -1,26 +1,29 @@
 import { ScrollRevealProvider } from '@/components/scroll-reveal-provider'
 import { HomeHero } from '@/components/home/home-hero'
+import { HomeHackathonBanner } from '@/components/home/home-hackathon-banner'
 import { HomeNextEvent } from '@/components/home/home-next-event'
 import { HomeMVV } from '@/components/home/home-mvv'
 import { HomeActivities } from '@/components/home/home-activities'
 import { HomeTrackRecord } from '@/components/home/home-track-record'
 import { HomeCommunityFeel } from '@/components/home/home-community-feel'
 import { HomeDualCta } from '@/components/home/home-dual-cta'
-import { getSiteStats, getActivitySummary } from '@/lib/cms'
+import { getSiteStats, getActivitySummary, getFeaturedHackathon } from '@/lib/cms'
 import { getConnpassUpcomingEvents } from '@/lib/connpass'
 
 export const revalidate = 3600
 
 export default async function HomePage() {
-  const [stats, summary, connpassEvents] = await Promise.all([
+  const [stats, summary, connpassEvents, featuredHackathon] = await Promise.all([
     getSiteStats(),
     getActivitySummary(),
     getConnpassUpcomingEvents(),
+    getFeaturedHackathon(),
   ])
 
   return (
     <ScrollRevealProvider>
       <HomeHero />
+      <HomeHackathonBanner hackathon={featuredHackathon} />
       <HomeNextEvent events={connpassEvents} />
       <HomeMVV />
       <HomeActivities eventCount={summary.eventCount} />

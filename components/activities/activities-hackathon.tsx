@@ -1,6 +1,8 @@
+import Link from 'next/link'
 import { ACTIVITIES_HACKATHON } from '@/lib/content'
+import type { Hackathon } from '@/lib/cms'
 
-export function ActivitiesHackathon() {
+export function ActivitiesHackathon({ featured }: { featured?: Hackathon | null }) {
   return (
     <section className="relative py-20 md:py-28 px-6 md:px-10 overflow-hidden" style={{ backgroundColor: 'var(--cream)' }}>
       <span
@@ -56,6 +58,29 @@ export function ActivitiesHackathon() {
                 </div>
               ))}
             </div>
+
+            {featured && (
+              <Link
+                href={`/hackathon/${featured.slug}`}
+                className="btn-forest inline-flex items-center justify-center gap-2 self-start mt-4 px-6 py-3 rounded-full border-[1.5px] text-sm font-bold reveal"
+              >
+                次回ハッカソン「{featured.title}」の詳細
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14M13 5l7 7-7 7" />
+                </svg>
+              </Link>
+            )}
           </div>
 
           <div className="md:col-span-5 reveal-right">

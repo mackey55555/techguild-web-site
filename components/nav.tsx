@@ -9,6 +9,8 @@ const navLinks = [
   { href: '/', label: 'ホーム' },
   { href: '/about', label: '私たちについて' },
   { href: '/activities', label: '活動内容' },
+  // prefix: /hackathon 配下（個別イベントページ含む）でアクティブ表示にする
+  { href: '/hackathon', label: 'ハッカソン', prefix: '/hackathon' },
   { href: '/students', label: '学生の方へ' },
   { href: '/companies', label: '企業の方へ' },
 ]
@@ -17,6 +19,9 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
+
+  const isActive = (link: { href: string; prefix?: string }) =>
+    link.prefix ? pathname.startsWith(link.prefix) : pathname === link.href
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -39,14 +44,14 @@ export function Nav() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-5 lg:gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium tracking-wide transition-colors duration-200"
+              className="text-sm font-medium tracking-wide transition-colors duration-200 whitespace-nowrap"
               style={{
-                color: pathname === link.href ? 'var(--terra)' : 'var(--forest)',
+                color: isActive(link) ? 'var(--terra)' : 'var(--forest)',
                 textDecoration: 'none',
               }}
             >
@@ -94,7 +99,7 @@ export function Nav() {
               href={link.href}
               onClick={() => setMenuOpen(false)}
               className="text-base font-semibold py-2"
-              style={{ color: pathname === link.href ? 'var(--terra)' : 'var(--forest)' }}
+              style={{ color: isActive(link) ? 'var(--terra)' : 'var(--forest)' }}
             >
               {link.label}
             </Link>

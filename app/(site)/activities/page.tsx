@@ -5,21 +5,22 @@ import { ActivitiesRoundtable } from '@/components/activities/activities-roundta
 import { ActivitiesOther } from '@/components/activities/activities-other'
 import { ActivitiesRecord } from '@/components/activities/activities-record'
 import { ActivitiesNextEvent } from '@/components/activities/activities-next-event'
-import { getEvents } from '@/lib/cms'
+import { getEvents, getFeaturedHackathon } from '@/lib/cms'
 import { getConnpassUpcomingEvents } from '@/lib/connpass'
 
 export const revalidate = 300
 
 export default async function ActivitiesPage() {
-  const [events, connpassEvents] = await Promise.all([
+  const [events, connpassEvents, featuredHackathon] = await Promise.all([
     getEvents(),
     getConnpassUpcomingEvents(),
+    getFeaturedHackathon(),
   ])
 
   return (
     <ScrollRevealProvider>
       <ActivitiesHero />
-      <ActivitiesHackathon />
+      <ActivitiesHackathon featured={featuredHackathon} />
       <ActivitiesRoundtable />
       <ActivitiesOther />
       <ActivitiesRecord events={events} />
