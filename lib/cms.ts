@@ -7,6 +7,15 @@ import keystaticConfig from '../keystatic.config'
 const reader = createReader(process.cwd(), keystaticConfig)
 
 const ORGANIZER_PHOTO_PUBLIC_PATH = '/images/organizer/'
+const SPONSOR_LOGO_PUBLIC_PATH = '/images/sponsors/'
+
+type HackathonEntry = Awaited<
+  ReturnType<typeof reader.collections.hackathons.read>
+> extends infer T
+  ? T extends null
+    ? never
+    : NonNullable<T>
+  : never
 
 // ---- 型定義 ----
 
@@ -26,6 +35,60 @@ export type EventItem = {
   eventType: EventType
   sortOrder: number
   url?: string
+}
+
+export type SponsorTier = 'gold' | 'silver' | 'bronze' | 'inkind'
+
+export type Sponsor = {
+  name: string
+  tier: SponsorTier
+  logo: string | null
+  url?: string
+  note?: string
+}
+
+export type HackathonStatus = 'open' | 'coming' | 'closed' | 'finished'
+
+export type TimetableItem = {
+  day: 'day1' | 'day2'
+  time: string
+  title: string
+  note?: string
+}
+
+export type Hackathon = {
+  slug: string
+  title: string
+  subtitle: string
+  catchCopy: string
+  status: HackathonStatus
+  connpassUrl: string | null
+  startDate: string
+  endDate: string
+  dateLabel: string
+  venueName: string
+  venueAddress: string
+  venueMapUrl?: string
+  venueNote?: string
+  capacity: string
+  fee: string
+  heroImage: string | null
+  themeTitle: string
+  themeDescription: string
+  themeExamples: string[]
+  targets: { title: string; description: string }[]
+  timetable: TimetableItem[]
+  timetableNote?: string
+  belongings: string[]
+  prizes: { title: string; description: string }[]
+  judgingCriteria: string[]
+  sponsors: Sponsor[]
+  sponsorMessage?: string
+  sponsorFormUrl?: string
+  sponsorDeadline?: string
+  faq: { question: string; answer: string }[]
+  notes: string[]
+  organizerLabel: string
 }
 
 export type StudentVoice = {
@@ -88,6 +151,96 @@ export async function getEvents(): Promise<EventItem[]> {
       url: entry.url || undefined,
     }))
     .sort((a, b) => b.sortOrder - a.sortOrder)
+}
+
+// ---- ハッカソン ----
+
+// Keystatic の画像フィールドは publicPath 込みの絶対パスで保存されるが、
+// 手書きでファイル名だけ入れた場合に備えて前置を補う（organizerPhoto と同じ扱い）。
+function resolveSponsorLogo(value: string | null | undefined): string | null {
+  if (!value) return null
+  return value.startsWith('/') ? value : `${SPONSOR_LOGO_PUBLIC_PATH}${value}`
+}
+
+function toHackathon(slug: string, entry: HackathonEntry): Hackathon {
+  return {
+    slug,
+    title: entry.title,
+    subtitle: entry.subtitle,
+    catchCopy: entry.catchCopy,
+    status: entry.status as HackathonStatus,
+    connpassUrl: entry.connpassUrl || null,
+    startDate: entry.startDate,
+    endDate: entry.endDate,
+    dateLabel: entry.dateLabel,
+    venueName: entry.venueName,
+    venueAddress: entry.venueAddress,
+    venueMapUrl: entry.venueMapUrl || undefined,
+    venueNote: entry.venueNote || undefined,
+    capacity: entry.capacity,
+    fee: entry.fee,
+    heroImage: entry.heroImage ?? null,
+    themeTitle: entry.themeTitle,
+    themeDescription: entry.themeDescription,
+    themeExamples: [...entry.themeExamples],
+    targets: entry.targets.map((t) => ({
+      title: t.title,
+      description: t.description,
+    })),
+    timetable: entry.timetable.map((t) => ({
+      day: t.day as TimetableItem['day'],
+      time: t.time,
+      title: t.title,
+      note: t.note || undefined,
+    })),
+    timetableNote: entry.timetableNote || undefined,
+    belongings: [...entry.belongings],
+    prizes: entry.prizes.map((p) => ({
+      title: p.title,
+      description: p.description,
+    })),
+    judgingCriteria: [...entry.judgingCriteria],
+    sponsors: entry.sponsors.map((s) => ({
+      name: s.name,
+      tier: s.tier as SponsorTier,
+      logo: resolveSponsorLogo(s.logo),
+      url: s.url || undefined,
+      note: s.note || undefined,
+    })),
+    sponsorMessage: entry.sponsorMessage || undefined,
+    sponsorFormUrl: entry.sponsorFormUrl || undefined,
+    sponsorDeadline: entry.sponsorDeadline || undefined,
+    faq: entry.faq.map((f) => ({ question: f.question, answer: f.answer })),
+    notes: [...entry.notes],
+    organizerLabel: entry.organizerLabel,
+  }
+}
+
+export async function getHackathons(): Promise<Hackathon[]> {
+  const all = await reader.collections.hackathons.all()
+  return all
+    .map(({ slug, entry }) => toHackathon(slug, entry as HackathonEntry))
+    .sort((a, b) => (a.startDate < b.startDate ? 1 : -1))
+}
+
+export async function getHackathon(slug: string): Promise<Hackathon | null> {
+  const entry = await reader.collections.hackathons.read(slug)
+  if (!entry) return null
+  return toHackathon(slug, entry as HackathonEntry)
+}
+
+// 開催日が未来で募集中のものを1件（トップ・活動ページからの導線用）
+export async function getFeaturedHackathon(): Promise<Hackathon | null> {
+  const all = await getHackathons()
+  const now = Date.now()
+  const upcoming = all
+    .filter((h) => h.status !== 'finished')
+    .filter((h) => {
+      const end = Date.parse(h.endDate)
+      return Number.isNaN(end) ? true : end >= now
+    })
+  // 直近に開催されるものを優先
+  return upcoming.sort((a, b) => (a.startDate < b.startDate ? -1 : 1))[0] ?? null
 }
 
 export async function getStudentVoices(): Promise<StudentVoice[]> {

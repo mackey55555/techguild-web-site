@@ -12,6 +12,13 @@ const nextConfig = {
   outputFileTracingIncludes: {
     '/**': ['./content/**/*'],
   },
+  images: {
+    // スポンサーのロゴは SVG で入稿されることがある。next/image の最適化サーバーは
+    // 既定で SVG を拒否する（400）ため許可し、あわせて実行を封じる緩和策を入れる。
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
 }
 
 export default nextConfig

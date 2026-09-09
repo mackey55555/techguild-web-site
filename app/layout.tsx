@@ -15,7 +15,17 @@ const plusJakarta = Plus_Jakarta_Sans({
   weight: ['400', '500', '600', '700', '800'],
 })
 
+// OGP 画像（ハッカソンのバナー等）を絶対URLに解決するための基点。
+// Vercel では VERCEL_PROJECT_PRODUCTION_URL が自動で入る。独自ドメインの場合は
+// NEXT_PUBLIC_SITE_URL に https://... を設定する。
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'http://localhost:3000')
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: 'Tech Guild — 学生と企業が、地域のITを一緒に育てる。',
   description:
     'Tech Guildは、学生と企業が対等なパートナーとして共に学び、共につくるコミュニティです。ハッカソンや月次座談会・ディナーイベントを通じて、地域のIT人材育成を一緒に推進しています。',

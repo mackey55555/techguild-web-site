@@ -1,0 +1,142 @@
+title: TechGuild ハッカソン 2026
+subtitle: 〜1泊2日合宿 in 渋川〜
+catchCopy: >-
+  ITの力を使って、渋川を盛り上げる。海のそばの施設にこもって、学生と社会人が混ざったチームで2日間つくりきる合宿型ハッカソンです。
+status: open
+connpassUrl: 'https://okayama-engineer.connpass.com/event/401705/'
+startDate: '2026-10-17T09:00:00+09:00'
+endDate: '2026-10-18T16:00:00+09:00'
+dateLabel: 2026.10.17(土) 9:00 〜 10.18(日) 16:00
+venueName: 岡山県渋川青年の家
+venueAddress: 岡山県玉野市渋川2丁目7-1
+venueMapUrl: 'https://www.google.com/maps/search/?api=1&query=岡山県玉野市渋川2丁目7-1'
+venueNote: >-
+  宿泊・食事はすべて施設内。現地集合・現地解散です。岡山市内から車で約50分。乗り合わせ・公共交通の案内は、参加者確定後にご連絡します。
+capacity: 40名程度
+fee: 無料（2日間の食事付き）
+heroImage: /images/hackathons/2026-shibukawa-banner.png
+themeTitle: ITの力を使って渋川を盛り上げる
+themeDescription: >-
+  観光・防災・地域コミュニティなど、切り口は自由。Webアプリ、スマホアプリ、IoT、AI活用など、つくるものの形式にも制限はありません。滞在する渋川の街そのものが題材です。
+themeExamples:
+  - 観光
+  - 防災
+  - 地域コミュニティ
+  - Webアプリ / スマホアプリ
+  - IoT
+  - AI活用
+targets:
+  - title: プログラミング未経験・初心者
+    description: チームには経験者が入ります。手を動かしながら覚えられるので、今できることが少なくても大丈夫です。
+  - title: 学生と社会人が混ざるチームで開発したい
+    description: チーム編成は運営が行います。ふだん出会えない相手と組むところから始まります。
+  - title: 地域×ITに興味がある
+    description: 実際にその場所に泊まり、街を見てからつくる。机上の空論にならない2日間です。
+  - title: 合宿形式の開発を体験したい
+    description: 朝から夜まで、同じ場所で同じものをつくる。短期集中でしか得られない密度があります。
+timetable:
+  - day: day1
+    time: '9:00'
+    title: 現地集合・入所手続き・オリエンテーション
+    note: ''
+  - day: day1
+    time: 午前
+    title: オープニング／チーム編成／アイデア出し
+    note: チーム編成は運営が行います
+  - day: day1
+    time: '12:00'
+    title: 昼食
+    note: 施設の食堂
+  - day: day1
+    time: 午後
+    title: 技術選定・役割分担 → 開発タイム
+    note: ''
+  - day: day1
+    time: '17:30'
+    title: 夕食
+    note: 施設の食堂
+  - day: day1
+    time: 夜
+    title: 開発タイム・チーム交流
+    note: ''
+  - day: day2
+    time: '7:00'
+    title: 朝食
+    note: 施設の食堂
+  - day: day2
+    time: 午前
+    title: 開発タイム（ラストスパート）
+    note: ''
+  - day: day2
+    time: '12:00'
+    title: 昼食
+    note: 施設の食堂
+  - day: day2
+    time: 午後
+    title: 発表・審査・表彰・クロージング
+    note: ''
+  - day: day2
+    time: '16:00'
+    title: 退所・現地解散
+    note: ''
+timetableNote: 2日間の食事はすべて施設の食堂でご用意します。参加費に含まれるので追加費用はかかりません。
+belongings:
+  - PC（必須）
+  - 充電器・延長コード
+  - 洗面用具・着替え・タオル
+  - 開発に必要なもの
+prizes:
+  - title: 最優秀賞
+    description: 発表・審査を経て選出。景品をご用意しています。
+judgingCriteria: []
+sponsors:
+  - name: 株式会社和田組
+    tier: gold
+    logo: /images/sponsors/wadagumi.png
+    url: 'https://waraku-da.co.jp/'
+    note: ''
+  - name: 株式会社なのです
+    tier: silver
+    logo: /images/sponsors/nanodesu.jpeg
+    url: 'https://nanodes.jp'
+    note: ''
+  - name: 株式会社Useful
+    tier: silver
+    logo: null
+    url: 'https://useful-tao.com/'
+    note: ''
+  - name: 株式会社和
+    tier: bronze
+    logo: /images/sponsors/nagomi.jpg
+    url: 'https://waraku-da.co.jp/'
+    note: ''
+  - name: 株式会社CODE54
+    tier: bronze
+    logo: /images/sponsors/code54.svg
+    url: 'https://www.code54.net/'
+    note: ''
+sponsorMessage: >-
+  このハッカソンは、地域の企業のみなさまのご協力で成り立っています。学生と直接ものづくりの現場を共にする機会として、協賛を募集しています。
+sponsorFormUrl: 'https://forms.gle/jXy7qnSjVV1SCRSF7'
+sponsorDeadline: '2026-09-30'
+faq:
+  - question: プログラミング未経験でも参加できますか？
+    answer: できます。未経験・初心者の方を歓迎しています。チーム編成は運営が行い、経験者と一緒のチームになるよう調整します。
+  - question: 1日だけの参加はできますか？
+    answer: 宿泊を伴う合宿形式のため、原則2日間通しでのご参加をお願いしています。
+  - question: 何を持っていけばいいですか？
+    answer: PC（必須）、充電器・延長コード、洗面用具・着替え・タオル、開発に必要なものをお持ちください。宿泊施設に泊まる想定でご準備ください。
+  - question: 食事はどうなりますか？
+    answer: 2日間の食事はすべて施設の食堂でご用意します。参加費に含まれるため追加費用はかかりません。食物アレルギーがある方は事前にお知らせください。
+  - question: お酒は飲めますか？
+    answer: 施設内での飲酒は厳禁です。打ち上げは別イベントとして予定しています。
+  - question: チームは自分で組みますか？
+    answer: いいえ、チーム編成は運営側で行います。学生と社会人が混ざるように調整します。
+notes:
+  - 宿泊を伴う合宿形式のイベントです。原則2日間通しでのご参加をお願いします。
+  - 施設内での飲酒は厳禁です。
+  - 喫煙は指定場所でお願いします。
+  - 外部からの飲食物の持ち込みには制限があります。
+  - 食物アレルギーのある方は、お申し込み時に必ずお知らせください。
+  - 直前キャンセルはご遠慮ください。やむを得ない場合は早めにご連絡ください。
+organizerLabel: 岡山エンジニアコミュニティ【Tech Guild】
