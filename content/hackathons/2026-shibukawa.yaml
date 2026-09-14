@@ -95,6 +95,11 @@ sponsors:
     logo: /images/sponsors/wadagumi.png
     url: 'https://waraku-da.co.jp/'
     note: ''
+  - name: ピープルソフトウェア株式会社
+    tier: gold
+    logo: /images/sponsors/pscsrv.svg
+    url: 'https://pscsrv.co.jp/'
+    note: ''
   - name: 株式会社なのです
     tier: silver
     logo: /images/sponsors/nanodesu.jpeg
