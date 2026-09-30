@@ -12,12 +12,20 @@ const TIER_LABEL: Record<SponsorTier, string> = {
   inkind: '現物協賛',
 }
 
-// ロゴ掲載サイズはプラン準拠（大・中・小）。列数を絞るほど1枠が大きくなる。
-const TIER_COLUMNS: Record<SponsorTier, string> = {
-  gold: 'grid-cols-1 sm:grid-cols-2',
-  silver: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
-  bronze: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
-  inkind: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
+// ロゴ掲載サイズはプラン準拠（大・中・小）。1行に並ぶ枚数を絞るほど1枠が大きくなる。
+// 一覧は flex の折り返し＋中央寄せで組むため、端数の行も中央に寄る。
+// 幅は「(100% - 行内の隙間の合計) / 1行の枚数」。隙間は gap-5(1.25rem) / md 以上 gap-6(1.5rem)。
+const TIER_ITEM_WIDTH: Record<SponsorTier, string> = {
+  // 1 → 2枚
+  gold: 'w-full sm:w-[calc((100%-1.25rem)/2)] md:w-[calc((100%-1.5rem)/2)]',
+  // 1 → 2 → 3枚
+  silver:
+    'w-full sm:w-[calc((100%-1.25rem)/2)] md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]',
+  // 2 → 3 → 4枚
+  bronze:
+    'w-[calc((100%-1.25rem)/2)] sm:w-[calc((100%-2.5rem)/3)] md:w-[calc((100%-3rem)/3)] lg:w-[calc((100%-4.5rem)/4)]',
+  inkind:
+    'w-[calc((100%-1.25rem)/2)] sm:w-[calc((100%-2.5rem)/3)] md:w-[calc((100%-3rem)/3)] lg:w-[calc((100%-4.5rem)/4)]',
 }
 
 const TIER_LOGO_HEIGHT: Record<SponsorTier, string> = {
@@ -28,17 +36,6 @@ const TIER_LOGO_HEIGHT: Record<SponsorTier, string> = {
 }
 
 // ロゴ未入稿の間は社名テキストで代替するため、ティアごとに文字サイズを変える
-// ゴールドは1行2枠のため、奇数社のときに最後の1枚が左に取り残される。
-// 最終行いっぱいに広げたうえで1枠分の幅に絞り、中央に置く。
-const TIER_ORPHAN: Record<SponsorTier, string> = {
-  gold:
-    'sm:[&>li:last-child:nth-child(odd)]:col-span-2 sm:[&>li:last-child:nth-child(odd)]:mx-auto ' +
-    'sm:[&>li:last-child:nth-child(odd)]:w-[calc(50%-0.625rem)] md:[&>li:last-child:nth-child(odd)]:w-[calc(50%-0.75rem)]',
-  silver: '',
-  bronze: '',
-  inkind: '',
-}
-
 const TIER_NAME_SIZE: Record<SponsorTier, string> = {
   gold: 'text-xl md:text-2xl',
   silver: 'text-lg md:text-xl',
@@ -115,7 +112,7 @@ function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
 
   if (sponsor.url) {
     return (
-      <li>
+      <li className={TIER_ITEM_WIDTH[sponsor.tier]}>
         <a
           href={sponsor.url}
           target="_blank"
@@ -131,7 +128,7 @@ function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
 
   return (
     <li
-      className={className}
+      className={`${className} ${TIER_ITEM_WIDTH[sponsor.tier]}`}
       style={{ backgroundColor: '#ffffff', borderColor: 'var(--forest)' }}
     >
       {inner}
@@ -179,7 +176,7 @@ export function HackathonSponsors({ hackathon }: { hackathon: Hackathon }) {
             >
               {TIER_LABEL[g.tier]}
             </p>
-            <ul className={`grid ${TIER_COLUMNS[g.tier]} ${TIER_ORPHAN[g.tier]} gap-5 md:gap-6`}>
+            <ul className="flex flex-wrap justify-center gap-5 md:gap-6">
               {g.items.map((s) => (
                 <SponsorCard key={s.name} sponsor={s} />
               ))}
