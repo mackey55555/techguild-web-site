@@ -28,6 +28,17 @@ const TIER_LOGO_HEIGHT: Record<SponsorTier, string> = {
 }
 
 // ロゴ未入稿の間は社名テキストで代替するため、ティアごとに文字サイズを変える
+// ゴールドは1行2枠のため、奇数社のときに最後の1枚が左に取り残される。
+// 最終行いっぱいに広げたうえで1枠分の幅に絞り、中央に置く。
+const TIER_ORPHAN: Record<SponsorTier, string> = {
+  gold:
+    'sm:[&>li:last-child:nth-child(odd)]:col-span-2 sm:[&>li:last-child:nth-child(odd)]:mx-auto ' +
+    'sm:[&>li:last-child:nth-child(odd)]:w-[calc(50%-0.625rem)] md:[&>li:last-child:nth-child(odd)]:w-[calc(50%-0.75rem)]',
+  silver: '',
+  bronze: '',
+  inkind: '',
+}
+
 const TIER_NAME_SIZE: Record<SponsorTier, string> = {
   gold: 'text-xl md:text-2xl',
   silver: 'text-lg md:text-xl',
@@ -168,7 +179,7 @@ export function HackathonSponsors({ hackathon }: { hackathon: Hackathon }) {
             >
               {TIER_LABEL[g.tier]}
             </p>
-            <ul className={`grid ${TIER_COLUMNS[g.tier]} gap-5 md:gap-6`}>
+            <ul className={`grid ${TIER_COLUMNS[g.tier]} ${TIER_ORPHAN[g.tier]} gap-5 md:gap-6`}>
               {g.items.map((s) => (
                 <SponsorCard key={s.name} sponsor={s} />
               ))}
