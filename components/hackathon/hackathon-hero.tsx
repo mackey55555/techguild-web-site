@@ -97,10 +97,30 @@ export function HackathonHero({ hackathon }: { hackathon: Hackathon }) {
         )}
 
         <div className="mt-10 reveal">
-          <ApplyButton url={hackathon.connpassUrl} status={hackathon.status} />
-          <p className="text-sm mt-3" style={{ color: 'var(--forest)', opacity: 0.6 }}>
-            お申し込み・最新情報は connpass のイベントページから
-          </p>
+          {hackathon.status === 'finished' ? (
+            <>
+              <p className="text-base font-bold mb-4" style={{ color: 'var(--forest)' }}>
+                このハッカソンは終了しました。ご参加いただいたみなさま、ありがとうございました。
+              </p>
+              {hackathon.connpassUrl && (
+                <a
+                  href={hackathon.connpassUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-outline-forest inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border-[1.5px] text-sm font-bold"
+                >
+                  connpass のイベントページを見る
+                </a>
+              )}
+            </>
+          ) : (
+            <>
+              <ApplyButton url={hackathon.connpassUrl} status={hackathon.status} />
+              <p className="text-sm mt-3" style={{ color: 'var(--forest)', opacity: 0.6 }}>
+                お申し込み・最新情報は connpass のイベントページから
+              </p>
+            </>
+          )}
         </div>
 
         <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px mt-14 border-2 reveal" style={{ borderColor: 'var(--forest)', backgroundColor: 'var(--forest)' }}>

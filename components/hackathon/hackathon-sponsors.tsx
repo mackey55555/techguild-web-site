@@ -184,6 +184,7 @@ export function HackathonSponsors({ hackathon }: { hackathon: Hackathon }) {
           </div>
         ))}
 
+        {hackathon.status !== 'finished' && (
         <div
           className="mt-12 p-6 md:p-8 border-2 border-dashed reveal flex flex-col md:flex-row md:items-center md:justify-between gap-6"
           style={{ borderColor: 'var(--forest)' }}
@@ -234,6 +235,7 @@ export function HackathonSponsors({ hackathon }: { hackathon: Hackathon }) {
             </Link>
           )}
         </div>
+        )}
       </div>
     </section>
   )
