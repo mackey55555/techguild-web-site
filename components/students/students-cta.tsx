@@ -76,7 +76,7 @@ export function StudentsCta({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/2dbarcodes_GW/M_gainfriends_2dbarcodes_GW.png"
-              alt="Tech Guild LINE公式アカウント 友だち追加QRコード"
+              alt="TechGuild LINE公式アカウント 友だち追加QRコード"
               width={148}
               height={148}
               className="block"

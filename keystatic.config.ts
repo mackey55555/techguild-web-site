@@ -23,7 +23,7 @@ const storage = useGithub
 export default config({
   storage,
   ui: {
-    brand: { name: 'Tech Guild' },
+    brand: { name: 'TechGuild' },
   },
   singletons: {
     siteStats: singleton({
@@ -243,7 +243,7 @@ export default config({
           label: '注意事項',
           itemLabel: (p) => p.value,
         }),
-        organizerLabel: fields.text({ label: '主催（例: 岡山エンジニアコミュニティ【Tech Guild】）' }),
+        organizerLabel: fields.text({ label: '主催（例: 岡山エンジニアコミュニティ【TechGuild】）' }),
       },
     }),
     studentVoices: collection({

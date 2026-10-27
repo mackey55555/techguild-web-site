@@ -11,8 +11,8 @@ import { getConnpassUpcomingEvents } from '@/lib/connpass'
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: '学生の方へ | Tech Guild',
-  description: '本物のプロダクト開発を経験しよう。Tech Guildは地域企業の課題を解決しながら、実践的なスキルを身につける場所です。',
+  title: '学生の方へ | TechGuild',
+  description: '本物のプロダクト開発を経験しよう。TechGuildは地域企業の課題を解決しながら、実践的なスキルを身につける場所です。',
 }
 
 export default async function StudentsPage() {

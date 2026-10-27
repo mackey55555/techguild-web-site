@@ -22,7 +22,7 @@ export function StudentsHero() {
           style={{ color: 'var(--forest)', opacity: 0.75 }}
         >
           教室では学べない実践スキルを、地域企業との共創で身につける。<br className="hidden md:block" />
-          Tech Guildは、あなたの挑戦を待っています。
+          TechGuildは、あなたの挑戦を待っています。
         </p>
       </div>
     </section>

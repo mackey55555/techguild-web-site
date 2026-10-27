@@ -34,7 +34,7 @@ export async function generateMetadata({
     `${hackathon.dateLabel}／${hackathon.venueName}で開催するハッカソンです。`
 
   return {
-    title: `${title} | Tech Guild`,
+    title: `${title} | TechGuild`,
     description,
     openGraph: {
       title,

@@ -43,7 +43,7 @@ export function Footer() {
           {/* Logo + tagline */}
           <div>
             <p className="font-serif font-black text-2xl mb-3" style={{ color: 'var(--cream)' }}>
-              Tech Guild
+              TechGuild
             </p>
             <p className="text-sm leading-relaxed max-w-xs opacity-70" style={{ color: 'var(--cream)' }}>
               ハッカソンと月次座談会を通じて、<br />学生と企業が共に成長するコミュニティ。
@@ -97,7 +97,7 @@ export function Footer() {
           style={{ borderColor: 'rgba(250,246,238,0.15)' }}
         >
           <p className="text-xs opacity-40" style={{ color: 'var(--cream)' }}>
-            © {new Date().getFullYear()} Tech Guild. All rights reserved.
+            © {new Date().getFullYear()} TechGuild. All rights reserved.
           </p>
         </div>
       </div>

@@ -49,7 +49,7 @@ export function HomeHero() {
               className="text-sm md:text-base leading-relaxed font-medium"
               style={{ color: 'var(--forest)', opacity: 0.75 }}
             >
-              Tech Guild is a co-creation community —<br />
+              TechGuild is a co-creation community —<br />
               companies and students, equal partners.
             </p>
 

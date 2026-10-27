@@ -8,9 +8,9 @@ import { CONNPASS_GROUP_URL } from '@/lib/connpass'
 export const revalidate = 300
 
 export const metadata: Metadata = {
-  title: 'ハッカソン | Tech Guild',
+  title: 'ハッカソン | TechGuild',
   description:
-    'Tech Guildが開催するハッカソンの一覧です。学生と社会人が混ざったチームで、短期集中でつくりきります。',
+    'TechGuildが開催するハッカソンの一覧です。学生と社会人が混ざったチームで、短期集中でつくりきります。',
 }
 
 export default async function HackathonIndexPage() {
@@ -37,7 +37,7 @@ export default async function HackathonIndexPage() {
             className="max-w-2xl text-base leading-relaxed mb-12 reveal"
             style={{ color: 'var(--forest)', opacity: 0.8 }}
           >
-            学生と社会人が混ざったチームで、短期集中でつくりきる。Tech Guild が開催するハッカソンの一覧です。お申し込みは各イベントの connpass ページから。
+            学生と社会人が混ざったチームで、短期集中でつくりきる。TechGuild が開催するハッカソンの一覧です。お申し込みは各イベントの connpass ページから。
           </p>
 
           {hackathons.length === 0 ? (

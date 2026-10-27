@@ -46,7 +46,7 @@ export function HomeCommunityFeel() {
         <div className="mt-10 flex items-center gap-4 reveal">
           <div className="h-px w-12" style={{ backgroundColor: 'var(--terra)' }} />
           <p className="text-sm font-semibold" style={{ color: 'var(--terra)' }}>
-            Tech Guild の哲学
+            TechGuild の哲学
           </p>
         </div>
       </div>

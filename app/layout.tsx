@@ -26,13 +26,13 @@ const siteUrl =
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'Tech Guild — 学生と企業が、地域のITを一緒に育てる。',
+  title: 'TechGuild — 学生と企業が、地域のITを一緒に育てる。',
   description:
-    'Tech Guildは、学生と企業が対等なパートナーとして共に学び、共につくるコミュニティです。ハッカソンや月次座談会・ディナーイベントを通じて、地域のIT人材育成を一緒に推進しています。',
+    'TechGuildは、学生と企業が対等なパートナーとして共に学び、共につくるコミュニティです。ハッカソンや月次座談会・ディナーイベントを通じて、地域のIT人材育成を一緒に推進しています。',
   generator: 'v0.app',
-  keywords: ['Tech Guild', 'コミュニティ', 'ハッカソン', '学生', '企業', 'IT', '共創', '地域'],
+  keywords: ['TechGuild', 'Tech Guild', 'コミュニティ', 'ハッカソン', '学生', '企業', 'IT', '共創', '地域'],
   openGraph: {
-    title: 'Tech Guild',
+    title: 'TechGuild',
     description: '学生と企業が、地域のITを一緒に育てる。',
     locale: 'ja_JP',
     type: 'website',

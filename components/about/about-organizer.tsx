@@ -1,5 +1,49 @@
+import type { ReactNode } from 'react'
 import Image from 'next/image'
 import type { Organizer } from '@/lib/cms'
+
+// プロフィール文中の [文字](URL) をリンクにする。
+// HTML として流し込まず（dangerouslySetInnerHTML は使わない）React 要素として組み立てる。
+// 許可するのは https:// で始まる URL だけで、それ以外は書かれた文字をそのまま表示する。
+const INLINE_LINK = /\[([^\]]+)\]\(([^)\s]+)\)/g
+
+function isAllowedUrl(url: string) {
+  if (!url.startsWith('https://')) return false
+  try {
+    return new URL(url).protocol === 'https:'
+  } catch {
+    return false
+  }
+}
+
+function renderWithLinks(text: string): ReactNode[] {
+  const nodes: ReactNode[] = []
+  let last = 0
+  for (const match of text.matchAll(INLINE_LINK)) {
+    const [raw, label, url] = match
+    const start = match.index ?? 0
+    if (start > last) nodes.push(text.slice(last, start))
+    nodes.push(
+      isAllowedUrl(url) ? (
+        <a
+          key={start}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold underline underline-offset-4 decoration-2 hover:opacity-80 transition-opacity"
+          style={{ color: 'var(--forest)' }}
+        >
+          {label}
+        </a>
+      ) : (
+        raw
+      )
+    )
+    last = start + raw.length
+  }
+  if (last < text.length) nodes.push(text.slice(last))
+  return nodes
+}
 
 export function AboutOrganizer({ organizer }: { organizer: Organizer }) {
   return (
@@ -66,7 +110,7 @@ export function AboutOrganizer({ organizer }: { organizer: Organizer }) {
               style={{ color: 'var(--forest)', opacity: 0.82 }}
             >
               {organizer.bio.map((paragraph, i) => (
-                <p key={i}>{paragraph}</p>
+                <p key={i}>{renderWithLinks(paragraph)}</p>
               ))}
             </div>
           </div>

@@ -40,7 +40,7 @@ export function Nav() {
       <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16">
         {/* Logo */}
         <Link href="/" className="font-serif font-black text-xl tracking-tight" style={{ color: 'var(--forest)' }}>
-          Tech Guild
+          TechGuild
         </Link>
 
         {/* Desktop nav */}
