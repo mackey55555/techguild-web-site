@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
@@ -39,12 +40,21 @@ export function Nav() {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16">
         {/* Logo */}
-        <Link href="/" className="font-serif font-black text-xl tracking-tight" style={{ color: 'var(--forest)' }}>
-          TechGuild
+        <Link href="/" className="flex items-center shrink-0" aria-label="TechGuild ホーム">
+          {/* 横長ロゴ（viewBox 1533.48 x 411.96）。高さを決めて幅は比率で出す */}
+          <Image
+            src="/images/brand/horizontal-color.svg"
+            alt="TechGuild"
+            width={134}
+            height={36}
+            priority
+            className="h-8 md:h-9 w-auto"
+          />
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-5 lg:gap-8">
+        {/* Desktop nav — 6項目＋CTA2つが1行に収まるのは 1100px 前後から。
+            それ未満（タブレット・小さめのノートPC）はハンバーガーメニューにする */}
+        <nav className="hidden xl:flex items-center gap-5 lg:gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -61,7 +71,7 @@ export function Nav() {
         </nav>
 
         {/* CTA — 学生(gold) / 企業(forest) で分岐 */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden xl:flex items-center gap-3">
           <Link
             href="/students#join"
             className="btn-gold text-sm font-semibold px-5 py-2 rounded-full border-[1.5px]"
@@ -78,7 +88,7 @@ export function Nav() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden p-2"
+          className="xl:hidden p-2"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? 'メニューを閉じる' : 'メニューを開く'}
           style={{ color: 'var(--forest)' }}
@@ -90,7 +100,7 @@ export function Nav() {
       {/* Mobile menu */}
       {menuOpen && (
         <div
-          className="md:hidden px-6 pb-6 flex flex-col gap-4"
+          className="xl:hidden px-6 pb-6 flex flex-col gap-4"
           style={{ backgroundColor: 'var(--cream)', borderTop: '1px solid var(--border)' }}
         >
           {navLinks.map((link) => (

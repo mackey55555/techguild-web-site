@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
 
@@ -42,9 +43,13 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between gap-10 mb-12">
           {/* Logo + tagline */}
           <div>
-            <p className="font-serif font-black text-2xl mb-3" style={{ color: 'var(--cream)' }}>
-              TechGuild
-            </p>
+            <Image
+              src="/images/brand/horizontal-reverse.svg"
+              alt="TechGuild"
+              width={179}
+              height={48}
+              className="h-10 md:h-12 w-auto mb-4"
+            />
             <p className="text-sm leading-relaxed max-w-xs opacity-70" style={{ color: 'var(--cream)' }}>
               ハッカソンと月次座談会を通じて、<br />学生と企業が共に成長するコミュニティ。
             </p>

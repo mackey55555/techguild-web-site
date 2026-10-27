@@ -43,6 +43,10 @@ export async function generateMetadata({
       locale: 'ja_JP',
       images: hackathon.heroImage ? [hackathon.heroImage] : undefined,
     },
+    // サイト共通の twitter-image より、イベントのバナーを優先する
+    twitter: hackathon.heroImage
+      ? { card: 'summary_large_image', title, description, images: [hackathon.heroImage] }
+      : undefined,
   }
 }
 
